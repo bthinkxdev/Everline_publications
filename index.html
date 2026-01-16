@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everline Publications - Publishing Knowledge That Lasts</title>
+    <style>
+        /* CSS Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a3a52;
+            --secondary: #c9a961;
+            --text: #2c3e50;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --border: #e0e0e0;
+            --success: #27ae60;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Palatino', 'Georgia', serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        p, li, button, input {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--white);
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav a {
+            margin-left: 2rem;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 101;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            max-width: 300px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            transition: right 0.3s ease;
+            padding-top: 80px;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 1rem 2rem;
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s;
+        }
+
+        .mobile-nav a:hover {
+            background: var(--light-bg);
+            color: var(--secondary);
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a3a52 0%, #2c5f7f 100%);
+            color: var(--white);
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-btn:hover {
+            background: #b89650;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(201, 169, 97, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--white);
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* Books Catalog */
+        .catalog {
+            background: var(--light-bg);
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .book-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            background: #e0e0e0;
+        }
+
+        .book-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .book-category {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .book-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .book-author {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-description {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .book-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .book-btn {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.9rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .book-btn:hover {
+            background: #2c5f7f;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            padding: 2.5rem;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.3rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--success);
+            color: var(--white);
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: #229954;
+        }
+
+        /* Why Choose Section */
+        .why-choose {
+            background: var(--white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(26, 58, 82, 0.2);
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-text {
+            color: #666;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--light-bg);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .testimonial-role {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--white);
+        }
+
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item strong {
+            display: block;
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            margin-top: 2rem;
+        }
+
+        .whatsapp-btn:hover {
+            background: #1fb855;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            header {
+                padding: 1rem 0;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            .hero {
+                padding: 4rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .cta-btn {
+                padding: 0.9rem 2rem;
+                font-size: 0.95rem;
+            }
+
+            section {
+                padding: 3rem 0;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .books-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .book-cover {
+                height: 350px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            .mobile-overlay {
+                display: block;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .book-cover {
+                height: 300px;
+            }
+
+            .book-title {
+                font-size: 1.2rem;
+            }
+
+            .book-price {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="logo.png" alt="Everline Publications Logo">
+                    <div>Everline <span>Publications</span></div>
+                </div>
+                <nav>
+                    <a href="#about">About</a>
+                    <a href="#catalog">Books</a>
+                    <a href="#why-choose">Why Us</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#catalog" class="mobile-nav-link">Books</a>
+        <a href="#why-choose" class="mobile-nav-link">Why Us</a>
+        <a href="#contact" class="mobile-nav-link">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Publishing Knowledge That Lasts</h1>
+            <p>Discover exceptional books from India's most trusted publication house. Quality content, affordable prices, and nationwide delivery.</p>
+            <a href="#catalog" class="cta-btn">Explore Our Books</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Everline Publications</h2>
+            <p class="section-subtitle">Building bridges between authors and readers since 2008</p>
+            <div class="about-content">
+                <p>Everline Publications stands as a beacon of quality in India's publishing landscape. For over 15 years, we have been committed to bringing exceptional literary works to readers across the nation. Our mission is to discover, nurture, and publish voices that inspire, educate, and transform.</p>
+                <p>We believe in the power of the written word to shape minds and societies. From fiction to non-fiction, academic texts to contemporary literature, our catalog represents the finest in Indian and international publishing.</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Books Published</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Renowned Authors</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15</span>
+                        <span class="stat-label">Years of Excellence</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50,000+</span>
+                        <span class="stat-label">Happy Readers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Catalog -->
+    <section class="catalog" id="catalog">
+        <div class="container">
+            <h2 class="section-title">Our Featured Collection</h2>
+            <p class="section-subtitle">Carefully curated books for discerning readers</p>
+            <div class="books-grid">
+                <!-- Book 1 -->
+                <div class="book-card">
+                    <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop" alt="The Silent Mountains" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Fiction</span>
+                        <h3 class="book-title">The Silent Mountains</h3>
+                        <p class="book-author">by Rajesh Talwar</p>
+                        <p class="book-description">A captivating tale of resilience and discovery set in the majestic Himalayas, exploring themes of solitude and self-discovery.</p>
+                        <div class="book-price">₹499</div>
+                        <button class="book-btn" onclick="openOrderModal('The Silent Mountains', 'Rajesh Talwar', 499)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Book 2 -->
+                <div class="book-card">
+                    <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=600&fit=crop" alt="Modern Business Strategies" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Business</span>
+                        <h3 class="book-title">Modern Business Strategies</h3>
+                        <p class="book-author">by Dr. Meena Sharma</p>
+                        <p class="book-description">Essential guide for entrepreneurs and business leaders navigating the digital economy with proven frameworks and case studies.</p>
+                        <div class="book-price">₹650</div>
+                        <button class="book-btn" onclick="openOrderModal('Modern Business Strategies', 'Dr. Meena Sharma', 650)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Book 3 -->
+                <div class="book-card">
+                    <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&h=600&fit=crop" alt="Whispers of the Past" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Historical Fiction</span>
+                        <h3 class="book-title">Whispers of the Past</h3>
+                        <p class="book-author">by Anjali Deshmukh</p>
+                        <p class="book-description">An intricate narrative weaving together stories from pre-independence India with contemporary relevance and emotional depth.</p>
+                        <div class="book-price">₹425</div>
+                        <button class="book-btn" onclick="openOrderModal('Whispers of the Past', 'Anjali Deshmukh', 425)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Book 4 -->
+                <div class="book-card">
+                    <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400&h=600&fit=crop" alt="Fundamentals of Data Science" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Technology</span>
+                        <h3 class="book-title">Fundamentals of Data Science</h3>
+                        <p class="book-author">by Prof. Vikram Patel</p>
+                        <p class="book-description">Comprehensive introduction to data science concepts, machine learning algorithms, and practical applications for students and professionals.</p>
+                        <div class="book-price">₹799</div>
+                        <button class="book-btn" onclick="openOrderModal('Fundamentals of Data Science', 'Prof. Vikram Patel', 799)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Book 5 -->
+                <div class="book-card">
+                    <img src="https://images.unsplash.com/photo-1491841651911-c44c30c34548?w=400&h=600&fit=crop" alt="The Mindful Path" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Self-Help</span>
+                        <h3 class="book-title">The Mindful Path</h3>
+                        <p class="book-author">by Swami Anand Krishna</p>
+                        <p class="book-description">Transform your life through mindfulness practices rooted in ancient wisdom and modern psychology for lasting peace and clarity.</p>
+                        <div class="book-price">₹375</div>
+                        <button class="book-btn" onclick="openOrderModal('The Mindful Path', 'Swami Anand Krishna', 375)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Book 6 -->
+                <div class="book-card">
+                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=600&fit=crop" alt="Indian Constitutional Law" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Law</span>
+                        <h3 class="book-title">Indian Constitutional Law</h3>
+                        <p class="book-author">by Justice R.K. Mehta (Retd.)</p>
+                        <p class="book-description">Authoritative text on constitutional principles, landmark judgments, and contemporary legal issues for law students and practitioners.</p>
+                        <div class="book-price">₹899</div>
+                        <button class="book-btn" onclick="openOrderModal('Indian Constitutional Law', 'Justice R.K. Mehta (Retd.)', 899)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Book 7 -->
+                <div class="book-card">
+                    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600&fit=crop" alt="Flavors of Home" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Cooking</span>
+                        <h3 class="book-title">Flavors of Home</h3>
+                        <p class="book-author">by Chef Priya Malhotra</p>
+                        <p class="book-description">Authentic Indian recipes from diverse regions, celebrating culinary heritage with step-by-step instructions and beautiful photography.</p>
+                        <div class="book-price">₹550</div>
+                        <button class="book-btn" onclick="openOrderModal('Flavors of Home', 'Chef Priya Malhotra', 550)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Book 8 -->
+                <div class="book-card">
+                    <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&h=600&fit=crop" alt="Urban Dreams" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Contemporary Fiction</span>
+                        <h3 class="book-title">Urban Dreams</h3>
+                        <p class="book-author">by Karan Johar</p>
+                        <p class="book-description">A compelling narrative about ambition, love, and identity in modern metropolitan India, capturing the pulse of urban life.</p>
+                        <div class="book-price">₹450</div>
+                        <button class="book-btn" onclick="openOrderModal('Urban Dreams', 'Karan Johar', 450)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Book 9 -->
+                <div class="book-card">
+                    <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=400&h=600&fit=crop" alt="Environmental Economics" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Economics</span>
+                        <h3 class="book-title">Environmental Economics</h3>
+                        <p class="book-author">by Dr. Sunita Narain</p>
+                        <p class="book-description">Critical analysis of sustainability, climate policy, and economic development with focus on India's environmental challenges.</p>
+                        <div class="book-price">₹725</div>
+                        <button class="book-btn" onclick="openOrderModal('Environmental Economics', 'Dr. Sunita Narain', 725)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Book 10 -->
+                <div class="book-card">
+                    <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=400&h=600&fit=crop" alt="Journey Within" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Philosophy</span>
+                        <h3 class="book-title">Journey Within</h3>
+                        <p class="book-author">by Acharya Prashant</p>
+                        <p class="book-description">Profound exploration of consciousness, spirituality, and the quest for meaning in contemporary times through Vedantic wisdom.</p>
+                        <div class="book-price">₹399</div>
+                        <button class="book-btn" onclick="openOrderModal('Journey Within', 'Acharya Prashant', 399)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Section -->
+    <section class="why-choose" id="why-choose">
+        <div class="container">
+            <h2 class="section-title">Why Choose Everline Publications</h2>
+            <p class="section-subtitle">Your trusted partner in literary excellence</p>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">Q</div>
+                    <h3 class="feature-title">Quality Publishing</h3>
+                    <p class="feature-text">Rigorous editorial standards ensure every book meets the highest quality benchmarks in content and production.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">A</div>
+                    <h3 class="feature-title">Trusted Authors</h3>
+                    <p class="feature-text">Collaborating with renowned authors and emerging voices to bring diverse perspectives and exceptional storytelling.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">₹</div>
+                    <h3 class="feature-title">Affordable Pricing</h3>
+                    <p class="feature-text">Premium quality books at competitive prices, making knowledge accessible to readers across all backgrounds.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">D</div>
+                    <h3 class="feature-title">Nationwide Delivery</h3>
+                    <p class="feature-text">Efficient distribution network ensuring your books reach you quickly and securely anywhere in India.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Readers Say</h2>
+            <p class="section-subtitle">Trusted by thousands of readers and institutions</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Everline Publications has consistently delivered exceptional quality books. Their catalog is diverse and their service impeccable. A true asset to Indian publishing."</p>
+                    <p class="testimonial-author">Dr. Ramesh Kumar</p>
+                    <p class="testimonial-role">Professor, Delhi University</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"As an author, working with Everline was a dream. Their professional approach and commitment to quality made the publishing journey smooth and rewarding."</p>
+                    <p class="testimonial-author">Priya Nair</p>
+                    <p class="testimonial-role">Author & Journalist</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"We've been ordering books from Everline for our library for years. Reliable, affordable, and always delivering the best titles. Highly recommended!"</p>
+                    <p class="testimonial-author">Arjun Patel</p>
+                    <p class="testimonial-role">Librarian, St. Xavier's College</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"The perfect blend of contemporary and classic literature. Everline's collection has enriched my reading experience immensely. Outstanding service!"</p>
+                    <p class="testimonial-author">Shreya Menon</p>
+                    <p class="testimonial-role">Book Enthusiast & Blogger</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">We're here to help with all your publishing needs</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>Address</strong>
+                    <p>Kannur, India</p>
+                </div>
+                <div class="contact-item">
+                    <strong>Phone</strong>
+                    <p>+91 94973 31817</p>
+                </div>
+                <div class="contact-item">
+                    <strong>Email</strong>
+                    <p>info@everlinepublications.com</p>
+                </div>
+                <div class="contact-item">
+                    <strong>Business Hours</strong>
+                    <p>Monday - Saturday: 10:00 AM - 6:00 PM</p>
+                </div>
+                <a href="https://wa.me/919497331817?text=Hello%20Everline%20Publications!%20I%20would%20like%20to%20know%20more%20about%20your%20books." class="cta-btn whatsapp-btn">Contact Us on WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Everline Publications. All Rights Reserved.</p>
+            <p style="margin-top: 1rem;">
+                <a href="#about">About</a>
+                <a href="#catalog">Books</a>
+                <a href="#why-choose">Why Us</a>
+                <a href="#contact">Contact</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Order Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+            <h2 class="modal-title">Complete Your Order</h2>
+            <form id="orderForm" onsubmit="submitOrder(event)">
+                <div class="form-group">
+                    <label>Selected Book *</label>
+                    <input type="text" id="bookName" readonly required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="customerName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input type="tel" id="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="email" placeholder="your@email.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Full Address *</label>
+                    <input type="text" id="address" placeholder="House/Flat No., Street, Locality" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City *</label>
+                        <input type="text" id="city" placeholder="Your city" required>
+                    </div>
+                    <div class="form-group">
+                        <label>State *</label>
+                        <input type="text" id="state" placeholder="Your state" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Pincode *</label>
+                        <input type="text" id="pincode" placeholder="6-digit pincode" pattern="[0-9]{6}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity *</label>
+                        <input type="number" id="quantity" value="1" min="1" max="50" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Total Price</label>
+                    <input type="text" id="totalPrice" readonly style="font-weight: 700; color: #27ae60; font-size: 1.2rem;">
+                </div>
+
+                <button type="submit" class="submit-btn">Order via WhatsApp</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global variables to store book details
+        let currentBook = {
+            name: '',
+            author: '',
+            price: 0
+        };
+
+        // Open order modal
+        function openOrderModal(bookName, author, price) {
+            currentBook = { name: bookName, author: author, price: price };
+            
+            document.getElementById('bookName').value = bookName;
+            document.getElementById('totalPrice').value = '₹' + price;
+            document.getElementById('orderModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close order modal
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            document.getElementById('orderForm').reset();
+        }
+
+        // Update total price when quantity changes
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityInput = document.getElementById('quantity');
+            if (quantityInput) {
+                quantityInput.addEventListener('input', function() {
+                    const quantity = parseInt(this.value) || 1;
+                    const total = currentBook.price * quantity;
+                    document.getElementById('totalPrice').value = '₹' + total;
+                });
+            }
+        });
+
+        // Submit order and redirect to WhatsApp
+        function submitOrder(event) {
+            event.preventDefault();
+            
+            // Get form values
+            const customerName = document.getElementById('customerName').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const pincode = document.getElementById('pincode').value;
+            const quantity = document.getElementById('quantity').value;
+            const totalPrice = currentBook.price * parseInt(quantity);
+
+            // Create WhatsApp message
+            const message = `
+*New Book Order - Everline Publications*
+
+📚 *Book Details:*
+Book Name: ${currentBook.name}
+Author: ${currentBook.author}
+Quantity: ${quantity}
+Price per book: ₹${currentBook.price}
+*Total Amount: ₹${totalPrice}*
+
+👤 *Customer Details:*
+Name: ${customerName}
+Phone: ${phone}
+Email: ${email}
+
+📍 *Delivery Address:*
+${address}
+${city}, ${state} - ${pincode}
+
+I would like to place this order. Please confirm availability and delivery timeline.
+            `.trim();
+
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // WhatsApp business number (replace with actual number)
+            const whatsappNumber = '919497331817';
+            
+            // Create WhatsApp URL
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            // Open WhatsApp
+            window.open(whatsappURL, '_blank');
+            
+            // Close modal and show confirmation
+            setTimeout(() => {
+                closeOrderModal();
+                alert('Redirecting to WhatsApp... Please complete your order there!');
+            }, 500);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('orderModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeOrderModal();
+            }
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animation for sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Mobile Menu Functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function toggleMobileMenu() {
+            mobileMenuBtn.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        function closeMobileMenu() {
+            mobileMenuBtn.classList.remove('active');
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Toggle menu on button click
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        }
+
+        // Close menu on overlay click
+        if (mobileOverlay) {
+            mobileOverlay.addEventListener('click', closeMobileMenu);
+        }
+
+        // Close menu when clicking on navigation links
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+    </script>
+</body>
+</html>
