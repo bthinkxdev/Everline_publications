@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Everline Publications - Publishing Knowledge That Lasts</title>
+    <!-- Preload banner images for faster loading -->
+    <link rel="preload" href="banner1.jpeg" as="image">
+    <link rel="preload" href="banner2.jpeg" as="image">
     <style>
         /* CSS Reset & Base Styles */
         * {
@@ -13,40 +16,65 @@
         }
 
         :root {
-            --primary: #1a3a52;
-            --secondary: #c9a961;
-            --text: #2c3e50;
-            --light-bg: #f8f9fa;
-            --white: #ffffff;
-            --border: #e0e0e0;
-            --success: #27ae60;
+            --primary-pink: #E91E63;
+            --primary-purple: #9C27B0;
+            --primary-violet: #673AB7;
+            --primary-orange: #FF6B35;
+            --secondary-orange: #FF8A50;
+            --text-dark: #1C1C1E;
+            --text-gray: #48484A;
+            --text-light: #8E8E93;
+            --bg-light: #F2F2F7;
+            --bg-white: #FFFFFF;
+            --border-light: rgba(60, 60, 67, 0.12);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --gradient-primary: linear-gradient(135deg, #E91E63 0%, #9C27B0 50%, #673AB7 100%);
+            --gradient-secondary: linear-gradient(135deg, #FF6B35 0%, #FF8A50 50%, #FFA07A 100%);
+            --gradient-full: linear-gradient(135deg, #E91E63 0%, #9C27B0 35%, #673AB7 65%, #FF6B35 100%);
         }
 
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            color: var(--text);
-            line-height: 1.7;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
             overflow-x: hidden;
+            background: var(--bg-light);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: rgba(156, 39, 176, 0.1);
+        }
+
+        /* iOS safe area support */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(0px, env(safe-area-inset-left));
+                padding-right: max(0px, env(safe-area-inset-right));
+            }
+            
+            .modal-content {
+                padding-bottom: max(2rem, calc(2rem + env(safe-area-inset-bottom)));
+            }
         }
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'Palatino', 'Georgia', serif;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        p, li, button, input {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
         }
 
         /* Header & Navigation */
         header {
-            background: var(--white);
-            padding: 1.5rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 1rem 0;
+            box-shadow: 0 1px 0 var(--border-light);
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: all 0.3s ease;
         }
 
         .container {
@@ -65,39 +93,60 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            font-size: 1.8rem;
-            color: var(--primary);
+            font-size: 1.5rem;
             font-weight: 700;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.03em;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .logo img {
-            height: 50px;
+            height: 45px;
             width: auto;
             object-fit: contain;
         }
 
-        .logo span {
-            color: var(--secondary);
+        nav {
+            display: flex;
+            gap: 2rem;
         }
 
         nav a {
-            margin-left: 2rem;
-            color: var(--text);
+            color: var(--text-dark);
             text-decoration: none;
             font-size: 0.95rem;
-            transition: color 0.3s;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         nav a:hover {
-            color: var(--secondary);
+            color: var(--primary-pink);
         }
 
         /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
             background: none;
             border: none;
             cursor: pointer;
@@ -106,11 +155,11 @@
         }
 
         .mobile-menu-btn span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary);
+            width: 24px;
+            height: 2px;
+            background: var(--text-dark);
             border-radius: 2px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
         .mobile-menu-btn.active span:nth-child(1) {
@@ -130,15 +179,18 @@
             position: fixed;
             top: 0;
             right: -100%;
-            width: 70%;
-            max-width: 300px;
+            width: 80%;
+            max-width: 320px;
             height: 100vh;
-            background: var(--white);
-            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
             z-index: 100;
-            transition: right 0.3s ease;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             padding-top: 80px;
             pointer-events: none;
+            border-radius: 24px 0 0 24px;
         }
 
         .mobile-nav.active {
@@ -149,15 +201,16 @@
         .mobile-nav a {
             display: block;
             padding: 1rem 2rem;
-            color: var(--text);
+            color: var(--text-dark);
             text-decoration: none;
-            border-bottom: 1px solid var(--border);
-            transition: background 0.3s;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .mobile-nav a:hover {
-            background: var(--light-bg);
-            color: var(--secondary);
+            background: var(--bg-light);
+            color: var(--primary-pink);
         }
 
         .mobile-overlay {
@@ -167,11 +220,11 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.4);
             z-index: 99;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .mobile-overlay.active {
@@ -181,45 +234,131 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #1a3a52 0%, #2c5f7f 100%);
-            color: var(--white);
-            padding: 6rem 0;
+            background: var(--gradient-full);
+            color: var(--bg-white);
+            padding: 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--white);
+        /* Hero Banner Styles */
+        .hero-banner-container {
+            position: relative;
+            width: 100%;
+            max-width: 100vw;
+            overflow: hidden;
+            background: var(--bg-light);
         }
 
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.95;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+        .hero-banner-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero-banner-slider {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
+
+        .hero-banner-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .hero-banner-slide:first-child {
+            position: relative;
+        }
+
+        .hero-banner-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .hero-banner-link.cta-btn {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            font-size: 1.1rem;
+            padding: 1rem 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            background: var(--bg-white);
+            color: var(--primary-purple);
+        }
+
+        .hero-banner-link.cta-btn:hover {
+            transform: translateX(-50%) translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Banner Navigation Dots */
+        .banner-dots {
+            position: absolute;
+            bottom: 5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .banner-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .banner-dot.active {
+            width: 24px;
+            border-radius: 4px;
+            background: var(--bg-white);
+        }
+
+        .banner-dot:hover {
+            background: rgba(255, 255, 255, 0.8);
         }
 
         .cta-btn {
             display: inline-block;
-            background: var(--secondary);
-            color: var(--white);
+            background: var(--bg-white);
+            color: var(--primary-purple);
             padding: 1rem 2.5rem;
-            border-radius: 4px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             cursor: pointer;
             font-size: 1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
         .cta-btn:hover {
-            background: #b89650;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(201, 169, 97, 0.3);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-btn:active {
+            transform: translateY(-1px) scale(1);
         }
 
         /* Section Styles */
@@ -231,19 +370,24 @@
             font-size: 2.5rem;
             text-align: center;
             margin-bottom: 1rem;
-            color: var(--primary);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -0.03em;
         }
 
         .section-subtitle {
             text-align: center;
-            color: #666;
+            color: var(--text-gray);
             margin-bottom: 3rem;
             font-size: 1.1rem;
         }
 
         /* About Section */
         .about {
-            background: var(--white);
+            background: var(--bg-white);
         }
 
         .about-content {
@@ -256,39 +400,58 @@
             font-size: 1.1rem;
             margin-bottom: 1.5rem;
             line-height: 1.8;
+            color: var(--text-gray);
         }
 
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
             margin-top: 3rem;
+            width: 100%;
         }
 
         .stat-item {
             text-align: center;
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
+            background: var(--bg-white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
         .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--secondary);
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: block;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
         }
 
         .stat-label {
-            color: #666;
+            color: var(--text-gray);
             margin-top: 0.5rem;
+            font-weight: 500;
+            line-height: 1.3;
+            word-wrap: break-word;
         }
 
         /* Books Catalog */
         .catalog {
-            background: var(--light-bg);
+            background: var(--bg-light);
         }
 
         .books-grid {
@@ -299,26 +462,26 @@
         }
 
         .book-card {
-            background: var(--white);
-            border-radius: 8px;
+            background: var(--bg-white);
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             height: 100%;
         }
 
         .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
         }
 
         .book-cover {
             width: 100%;
-            height: 400px;
+            height: 380px;
             object-fit: cover;
-            background: #e0e0e0;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
         }
 
         .book-info {
@@ -330,57 +493,69 @@
 
         .book-category {
             display: inline-block;
-            background: var(--primary);
-            color: var(--white);
-            padding: 0.3rem 0.8rem;
+            background: var(--gradient-primary);
+            color: var(--bg-white);
+            padding: 0.4rem 1rem;
             border-radius: 20px;
-            font-size: 0.75rem;
-            margin-bottom: 0.8rem;
+            font-size: 0.7rem;
+            margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            font-weight: 600;
+            width: fit-content;
         }
 
         .book-title {
             font-size: 1.4rem;
             margin-bottom: 0.5rem;
-            color: var(--primary);
+            color: var(--text-dark);
+            font-weight: 700;
         }
 
         .book-author {
-            color: #666;
+            color: var(--text-light);
             font-size: 0.95rem;
             margin-bottom: 1rem;
         }
 
         .book-description {
             font-size: 0.9rem;
-            color: #555;
+            color: var(--text-gray);
             margin-bottom: 1rem;
             line-height: 1.6;
             flex-grow: 1;
         }
 
         .book-price {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--success);
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 1rem;
         }
 
         .book-btn {
             width: 100%;
-            background: var(--primary);
-            color: var(--white);
-            padding: 0.9rem;
+            background: var(--gradient-primary);
+            color: var(--bg-white);
+            padding: 1rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 16px;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1rem;
         }
 
         .book-btn:hover {
-            background: #2c5f7f;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(156, 39, 176, 0.4);
+        }
+
+        .book-btn:active {
+            transform: translateY(0);
         }
 
         /* Modal Styles */
@@ -391,65 +566,253 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             z-index: 10000;
-            overflow-y: auto;
+            padding: 0;
         }
 
         .modal.active {
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
-            padding: 2rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
-            background: var(--white);
-            border-radius: 12px;
+            background: var(--bg-white);
+            border-radius: 24px 24px 0 0;
             max-width: 600px;
             width: 100%;
-            padding: 2.5rem;
+            padding: 1.5rem 1.5rem 2rem;
             position: relative;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
+            animation: slideUpModal 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.2s ease-out;
+            touch-action: pan-y;
+        }
+
+        @keyframes slideUpModal {
+            from {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-content.dragging {
+            transition: none;
+            overflow-y: hidden;
+        }
+
+        .modal-content.dragging .modal-indicator {
+            width: 60px;
+            background: rgba(156, 39, 176, 0.5);
+        }
+
+        .modal-content.closing {
+            animation: slideDownModal 0.3s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+        }
+
+        @keyframes slideDownModal {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+        }
+
+        /* Prevent body scroll when modal is open */
+        body.modal-open {
+            overflow: hidden;
         }
 
         .modal-close {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--bg-light);
             border: none;
-            font-size: 2rem;
+            font-size: 1.5rem;
             cursor: pointer;
-            color: #999;
+            color: var(--text-dark);
             line-height: 1;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 11;
+        }
+
+        .modal-close:hover {
+            background: var(--gradient-primary);
+            color: var(--bg-white);
+            transform: rotate(90deg);
+        }
+
+        .modal-close:active {
+            transform: scale(0.9);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-top: 0.5rem;
+            position: relative;
+        }
+
+        .modal-drag-handle {
+            padding: 1rem 0 0.5rem;
+            margin: -1.5rem -1.5rem 0;
+            cursor: grab;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: -1.5rem;
+            background: var(--bg-white);
+            z-index: 10;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .modal-drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .modal-indicator {
+            width: 40px;
+            height: 5px;
+            background: var(--border-light);
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+
+        .modal-drag-handle:hover .modal-indicator {
+            background: rgba(156, 39, 176, 0.3);
+            width: 50px;
+        }
+
+        .modal-drag-handle:active .modal-indicator {
+            width: 60px;
         }
 
         .modal-title {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .modal-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 500;
         }
 
         .form-group {
-            margin-bottom: 1.3rem;
+            margin-bottom: 1.25rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             font-weight: 600;
-            color: var(--text);
+            color: var(--text-dark);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--border);
-            border-radius: 4px;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--border-light);
+            border-radius: 14px;
             font-size: 1rem;
+            background: var(--bg-white);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            color: var(--text-dark);
+            -webkit-appearance: none;
+            appearance: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .form-group input:active {
+            transform: scale(0.995);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 4px rgba(156, 39, 176, 0.1);
+            background: var(--bg-white);
+        }
+
+        .form-group input[readonly] {
+            background: var(--bg-light);
+            color: var(--text-gray);
+            font-weight: 600;
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        .form-group input:valid {
+            border-color: rgba(39, 174, 96, 0.3);
+        }
+
+        .form-group input:invalid:not(:placeholder-shown) {
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+
+        /* Form animations */
+        .modal.active .form-group {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .modal.active .form-group:nth-child(1) { animation-delay: 0.05s; }
+        .modal.active .form-group:nth-child(2) { animation-delay: 0.1s; }
+        .modal.active .form-group:nth-child(3) { animation-delay: 0.15s; }
+        .modal.active .form-group:nth-child(4) { animation-delay: 0.2s; }
+        .modal.active .form-group:nth-child(5) { animation-delay: 0.25s; }
+        .modal.active .form-group:nth-child(6) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .form-row {
@@ -458,74 +821,181 @@
             gap: 1rem;
         }
 
+        .form-section {
+            margin: 1.5rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .form-section:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .form-section-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-section-title::before {
+            content: '';
+            width: 3px;
+            height: 12px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .price-display {
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 100%);
+            border: 2px solid rgba(156, 39, 176, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 16px rgba(156, 39, 176, 0.1);
+        }
+
+        .price-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-gray);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
         .submit-btn {
             width: 100%;
-            background: var(--success);
-            color: var(--white);
-            padding: 1rem;
+            background: var(--gradient-primary);
+            color: var(--bg-white);
+            padding: 1.3rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 16px;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 1.5rem;
+            box-shadow: 0 8px 24px rgba(156, 39, 176, 0.3);
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            font-size: 0.95rem;
         }
 
         .submit-btn:hover {
-            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(156, 39, 176, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Required field indicator */
+        .form-group label::after {
+            content: '';
+        }
+
+        .form-group:has(input[required]) label::after,
+        .form-group:has(select[required]) label::after {
+            content: ' *';
+            color: var(--primary-pink);
+            font-weight: 700;
+        }
+
+        /* Smooth scrollbar for modal */
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 3px;
         }
 
         /* Why Choose Section */
         .why-choose {
-            background: var(--white);
+            background: var(--bg-white);
         }
 
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2.5rem;
+            gap: 2rem;
             margin-top: 3rem;
         }
 
         .feature-item {
             text-align: center;
-            padding: 2rem 1rem;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+            padding: 2rem 1.5rem;
+            background: var(--bg-white);
+            border-radius: 24px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         .feature-icon {
             width: 80px;
             height: 80px;
             margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
+            background: var(--gradient-full);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--white);
+            color: var(--bg-white);
             font-size: 2rem;
             font-weight: 700;
-            box-shadow: 0 4px 15px rgba(26, 58, 82, 0.2);
+            box-shadow: 0 8px 24px rgba(156, 39, 176, 0.3);
         }
 
         .feature-title {
             font-size: 1.3rem;
             margin-bottom: 0.8rem;
-            color: var(--primary);
+            color: var(--text-dark);
+            font-weight: 700;
         }
 
         .feature-text {
-            color: #666;
+            color: var(--text-gray);
             line-height: 1.6;
-            flex-grow: 1;
         }
 
         /* Testimonials */
         .testimonials {
-            background: var(--light-bg);
+            background: var(--bg-light);
         }
 
         .testimonials-grid {
@@ -536,37 +1006,61 @@
         }
 
         .testimonial-card {
-            background: var(--white);
+            background: var(--bg-white);
             padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-radius: 24px;
+            box-shadow: var(--shadow-md);
             display: flex;
             flex-direction: column;
             height: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 8rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.1;
+            font-weight: 900;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         .testimonial-text {
             font-size: 1rem;
-            color: #555;
+            color: var(--text-gray);
             margin-bottom: 1.5rem;
             font-style: italic;
             line-height: 1.7;
             flex-grow: 1;
+            position: relative;
+            z-index: 1;
         }
 
         .testimonial-author {
-            font-weight: 600;
-            color: var(--primary);
+            font-weight: 700;
+            color: var(--text-dark);
         }
 
         .testimonial-role {
-            color: #999;
+            color: var(--text-light);
             font-size: 0.9rem;
         }
 
         /* Contact Section */
         .contact {
-            background: var(--white);
+            background: var(--bg-white);
         }
 
         .contact-info {
@@ -576,42 +1070,91 @@
         }
 
         .contact-item {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 16px;
         }
 
         .contact-item strong {
             display: block;
-            margin-bottom: 0.3rem;
-            color: var(--primary);
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-item p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
         }
 
         .whatsapp-btn {
-            background: #25D366;
+            background: linear-gradient(135deg, #25D366 0%, #20BA5A 100%);
             margin-top: 2rem;
         }
 
         .whatsapp-btn:hover {
-            background: #1fb855;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
         }
 
         /* Footer */
         footer {
-            background: var(--primary);
-            color: var(--white);
-            padding: 2rem 0;
+            background: var(--gradient-full);
+            color: var(--bg-white);
+            padding: 3rem 0;
             text-align: center;
         }
 
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
         footer a {
-            color: var(--secondary);
+            color: var(--bg-white);
             text-decoration: none;
             margin: 0 1rem;
+            font-weight: 500;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        footer a:hover {
+            opacity: 1;
+        }
+
+        /* Desktop Modal Enhancement */
+        @media (min-width: 769px) {
+            .modal.active {
+                align-items: center;
+                padding: 2rem;
+            }
+
+            .modal-content {
+                border-radius: 24px;
+                max-height: 85vh;
+                padding: 2.5rem;
+            }
+
+            .modal-drag-handle {
+                display: none;
+            }
+
+            .modal-close {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .submit-btn:hover {
+                transform: translateY(-3px);
+            }
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .container {
-                padding: 0 1rem;
+                padding: 0 1.5rem;
             }
 
             header {
@@ -619,7 +1162,7 @@
             }
 
             .logo {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
             }
 
             .logo img {
@@ -627,48 +1170,58 @@
             }
 
             .hero {
-                padding: 4rem 0;
+                padding: 0;
             }
 
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
+            .hero-banner-link.cta-btn {
                 font-size: 1rem;
-                margin-bottom: 2rem;
+                padding: 0.95rem 2.25rem;
+                bottom: 1.75rem;
+            }
+
+            .banner-dots {
+                bottom: 4.25rem;
             }
 
             .cta-btn {
-                padding: 0.9rem 2rem;
+                padding: 1rem 2rem;
                 font-size: 0.95rem;
             }
 
             section {
-                padding: 3rem 0;
+                padding: 3.5rem 0;
             }
 
             .section-title {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
 
             .section-subtitle {
                 font-size: 1rem;
-                margin-bottom: 2rem;
+                margin-bottom: 2.5rem;
             }
 
             .stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-item {
+                padding: 1.5rem 0.75rem;
+                border-radius: 16px;
             }
 
             .stat-number {
                 font-size: 2rem;
             }
 
+            .stat-label {
+                font-size: 0.8rem;
+            }
+
             .books-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 2rem;
             }
 
             .book-cover {
@@ -677,7 +1230,7 @@
 
             .features-grid {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 1.5rem;
             }
 
             .testimonials-grid {
@@ -687,6 +1240,11 @@
 
             .form-row {
                 grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-row .form-group {
+                margin-bottom: 1.25rem;
             }
 
             nav {
@@ -705,58 +1263,237 @@
                 display: block;
             }
 
+            .modal {
+                padding: 0;
+            }
+
+            .modal.active {
+                align-items: flex-end;
+            }
+
             .modal-content {
-                padding: 1.5rem;
-                margin: 1rem;
+                padding: 0 1.25rem 2rem;
+                margin: 0;
+                border-radius: 24px 24px 0 0;
+                max-height: 88vh;
+            }
+
+            .modal-drag-handle {
+                margin: 0 -1.25rem 0;
+                padding: 1rem 0 0.75rem;
+                border-radius: 24px 24px 0 0;
+            }
+
+            .modal-header {
+                margin-bottom: 1.5rem;
             }
 
             .modal-title {
                 font-size: 1.5rem;
             }
+
+            .modal-subtitle {
+                font-size: 0.85rem;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .form-group label {
+                font-size: 0.75rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 0.95rem 1rem;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .form-section {
+                margin: 1rem 0;
+                padding: 1rem 0;
+            }
+
+            .form-section-title {
+                font-size: 0.7rem;
+                margin-bottom: 0.85rem;
+            }
+
+            .price-display {
+                padding: 1rem;
+                margin: 1.25rem 0;
+            }
+
+            .price-amount {
+                font-size: 2.2rem;
+            }
+
+            .submit-btn {
+                padding: 1.2rem;
+                font-size: 0.9rem;
+                margin-top: 1.25rem;
+                position: sticky;
+                bottom: 0;
+                background: var(--gradient-primary);
+            }
         }
 
         @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
             .logo {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
 
             .logo img {
                 height: 35px;
             }
 
-            .hero h1 {
-                font-size: 1.6rem;
+            .hero {
+                padding: 0;
             }
 
-            .hero p {
-                font-size: 0.95rem;
+            .hero-banner-link.cta-btn {
+                font-size: 0.85rem;
+                padding: 0.85rem 1.75rem;
+                bottom: 1.25rem;
+            }
+
+            .banner-dots {
+                bottom: 3.75rem;
+            }
+
+            .banner-dot {
+                width: 6px;
+                height: 6px;
+            }
+
+            .banner-dot.active {
+                width: 20px;
             }
 
             .section-title {
-                font-size: 1.5rem;
+                font-size: 1.75rem;
             }
 
             .stats {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.5rem;
+            }
+
+            .stat-item {
+                padding: 1.25rem 0.5rem;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            .stat-label {
+                font-size: 0.65rem;
+                line-height: 1.2;
             }
 
             .book-cover {
-                height: 300px;
+                height: 320px;
             }
 
             .book-title {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
 
             .book-price {
-                font-size: 1.5rem;
+                font-size: 1.75rem;
+            }
+
+            .modal-content {
+                padding: 0 1rem 1.75rem;
+                border-radius: 20px 20px 0 0;
+                max-height: 90vh;
+            }
+
+            .modal-drag-handle {
+                margin: 0 -1rem 0;
+                padding: 0.85rem 0 0.6rem;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .modal-indicator {
+                width: 36px;
+                height: 5px;
+            }
+
+            .modal-header {
+                margin-bottom: 1.25rem;
+            }
+
+            .modal-title {
+                font-size: 1.35rem;
+            }
+
+            .modal-subtitle {
+                font-size: 0.8rem;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 0.9rem;
+                border-radius: 12px;
+            }
+
+            .price-display {
+                padding: 0.9rem;
+                margin: 1rem 0;
+                border-radius: 12px;
+            }
+
+            .price-label {
+                font-size: 0.7rem;
+            }
+
+            .price-amount {
+                font-size: 2rem;
+            }
+
+            .submit-btn {
+                padding: 1.1rem;
+                font-size: 0.85rem;
+                border-radius: 14px;
+            }
+
+            .modal-close {
+                width: 36px;
+                height: 36px;
+                top: 0.75rem;
+                right: 0.75rem;
             }
         }
 
         /* Smooth Scroll */
         html {
             scroll-behavior: smooth;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gradient-secondary);
         }
     </style>
 </head>
@@ -767,7 +1504,7 @@
             <div class="nav-container">
                 <div class="logo">
                     <img src="logo.png" alt="Everline Publications Logo">
-                    <div>Everline <span>Publications</span></div>
+                    <div>Everline Publications</div>
                 </div>
                 <nav>
                     <a href="#about">About</a>
@@ -795,12 +1532,18 @@
         <a href="#contact" class="mobile-nav-link">Contact</a>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Auto Scrolling Banner -->
     <section class="hero">
-        <div class="container">
-            <h1>Publishing Knowledge That Lasts</h1>
-            <p>Discover exceptional books from India's most trusted publication house. Quality content, affordable prices, and nationwide delivery.</p>
-            <a href="#catalog" class="cta-btn">Explore Our Books</a>
+        <div class="hero-banner-container">
+            <div class="hero-banner-slider" id="heroBannerSlider">
+                <img src="banner1.jpeg" alt="Everline Publications Banner 1" class="hero-banner-slide active">
+                <img src="banner2.jpeg" alt="Everline Publications Banner 2" class="hero-banner-slide">
+            </div>
+            <div class="banner-dots" id="bannerDots">
+                <span class="banner-dot active" data-slide="0"></span>
+                <span class="banner-dot" data-slide="1"></span>
+            </div>
+            <a href="#catalog" class="cta-btn hero-banner-link">Explore Our Books</a>
         </div>
     </section>
 
@@ -842,131 +1585,53 @@
             <div class="books-grid">
                 <!-- Book 1 -->
                 <div class="book-card">
-                    <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop" alt="The Silent Mountains" class="book-cover">
+                    <img src="Pranaya poompodi.jpeg" alt="Pranaya Poompodi" class="book-cover">
                     <div class="book-info">
-                        <span class="book-category">Fiction</span>
-                        <h3 class="book-title">The Silent Mountains</h3>
-                        <p class="book-author">by Rajesh Talwar</p>
-                        <p class="book-description">A captivating tale of resilience and discovery set in the majestic Himalayas, exploring themes of solitude and self-discovery.</p>
-                        <div class="book-price">₹499</div>
-                        <button class="book-btn" onclick="openOrderModal('The Silent Mountains', 'Rajesh Talwar', 499)">Book Now on WhatsApp</button>
+                        <span class="book-category">Romance</span>
+                        <h3 class="book-title">Pranaya Poompodi</h3>
+                        <p class="book-author">by Sanjo Simon</p>
+                        <p class="book-description">Pranaya Poompodi Malayalam novel written by Sanjo Simon. A beautiful romance story that captures the essence of love and relationships.</p>
+                        <div class="book-price">₹63</div>
+                        <button class="book-btn" onclick="openOrderModal('Pranaya Poompodi', 'Sanjo Simon', 63)">Book Now on WhatsApp</button>
                     </div>
                 </div>
 
                 <!-- Book 2 -->
                 <div class="book-card">
-                    <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=600&fit=crop" alt="Modern Business Strategies" class="book-cover">
+                    <img src="Amaluvum mathavanum.jpeg" alt="Amaluvum Mathavanum" class="book-cover">
                     <div class="book-info">
-                        <span class="book-category">Business</span>
-                        <h3 class="book-title">Modern Business Strategies</h3>
-                        <p class="book-author">by Dr. Meena Sharma</p>
-                        <p class="book-description">Essential guide for entrepreneurs and business leaders navigating the digital economy with proven frameworks and case studies.</p>
-                        <div class="book-price">₹650</div>
-                        <button class="book-btn" onclick="openOrderModal('Modern Business Strategies', 'Dr. Meena Sharma', 650)">Book Now on WhatsApp</button>
+                        <span class="book-category">Romance</span>
+                        <h3 class="book-title">Amaluvum Mathavanum</h3>
+                        <p class="book-author">by Sarath Manikandan</p>
+                        <p class="book-description">Amaluvum Mathavanum Malayalam novel written by Sarath Manikandan. A touching romantic tale that explores deep emotions.</p>
+                        <div class="book-price">₹52</div>
+                        <button class="book-btn" onclick="openOrderModal('Amaluvum Mathavanum', 'Sarath Manikandan', 52)">Book Now on WhatsApp</button>
                     </div>
                 </div>
 
                 <!-- Book 3 -->
                 <div class="book-card">
-                    <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&h=600&fit=crop" alt="Whispers of the Past" class="book-cover">
+                    <img src="Silence .jpeg" alt="Silence" class="book-cover">
                     <div class="book-info">
-                        <span class="book-category">Historical Fiction</span>
-                        <h3 class="book-title">Whispers of the Past</h3>
-                        <p class="book-author">by Anjali Deshmukh</p>
-                        <p class="book-description">An intricate narrative weaving together stories from pre-independence India with contemporary relevance and emotional depth.</p>
-                        <div class="book-price">₹425</div>
-                        <button class="book-btn" onclick="openOrderModal('Whispers of the Past', 'Anjali Deshmukh', 425)">Book Now on WhatsApp</button>
+                        <span class="book-category">Romance</span>
+                        <h3 class="book-title">Silence</h3>
+                        <p class="book-author">by Deepa Valsalam</p>
+                        <p class="book-description">Silence - Malayalam stories written by Deepa Valsalam. A collection of romantic stories that speak volumes through silence.</p>
+                        <div class="book-price">₹66</div>
+                        <button class="book-btn" onclick="openOrderModal('Silence', 'Deepa Valsalam', 66)">Book Now on WhatsApp</button>
                     </div>
                 </div>
 
                 <!-- Book 4 -->
                 <div class="book-card">
-                    <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400&h=600&fit=crop" alt="Fundamentals of Data Science" class="book-cover">
+                    <img src="Erlin.jpeg" alt="Erlin" class="book-cover">
                     <div class="book-info">
-                        <span class="book-category">Technology</span>
-                        <h3 class="book-title">Fundamentals of Data Science</h3>
-                        <p class="book-author">by Prof. Vikram Patel</p>
-                        <p class="book-description">Comprehensive introduction to data science concepts, machine learning algorithms, and practical applications for students and professionals.</p>
-                        <div class="book-price">₹799</div>
-                        <button class="book-btn" onclick="openOrderModal('Fundamentals of Data Science', 'Prof. Vikram Patel', 799)">Book Now on WhatsApp</button>
-                    </div>
-                </div>
-
-                <!-- Book 5 -->
-                <div class="book-card">
-                    <img src="https://images.unsplash.com/photo-1491841651911-c44c30c34548?w=400&h=600&fit=crop" alt="The Mindful Path" class="book-cover">
-                    <div class="book-info">
-                        <span class="book-category">Self-Help</span>
-                        <h3 class="book-title">The Mindful Path</h3>
-                        <p class="book-author">by Swami Anand Krishna</p>
-                        <p class="book-description">Transform your life through mindfulness practices rooted in ancient wisdom and modern psychology for lasting peace and clarity.</p>
-                        <div class="book-price">₹375</div>
-                        <button class="book-btn" onclick="openOrderModal('The Mindful Path', 'Swami Anand Krishna', 375)">Book Now on WhatsApp</button>
-                    </div>
-                </div>
-
-                <!-- Book 6 -->
-                <div class="book-card">
-                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=600&fit=crop" alt="Indian Constitutional Law" class="book-cover">
-                    <div class="book-info">
-                        <span class="book-category">Law</span>
-                        <h3 class="book-title">Indian Constitutional Law</h3>
-                        <p class="book-author">by Justice R.K. Mehta (Retd.)</p>
-                        <p class="book-description">Authoritative text on constitutional principles, landmark judgments, and contemporary legal issues for law students and practitioners.</p>
-                        <div class="book-price">₹899</div>
-                        <button class="book-btn" onclick="openOrderModal('Indian Constitutional Law', 'Justice R.K. Mehta (Retd.)', 899)">Book Now on WhatsApp</button>
-                    </div>
-                </div>
-
-                <!-- Book 7 -->
-                <div class="book-card">
-                    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600&fit=crop" alt="Flavors of Home" class="book-cover">
-                    <div class="book-info">
-                        <span class="book-category">Cooking</span>
-                        <h3 class="book-title">Flavors of Home</h3>
-                        <p class="book-author">by Chef Priya Malhotra</p>
-                        <p class="book-description">Authentic Indian recipes from diverse regions, celebrating culinary heritage with step-by-step instructions and beautiful photography.</p>
-                        <div class="book-price">₹550</div>
-                        <button class="book-btn" onclick="openOrderModal('Flavors of Home', 'Chef Priya Malhotra', 550)">Book Now on WhatsApp</button>
-                    </div>
-                </div>
-
-                <!-- Book 8 -->
-                <div class="book-card">
-                    <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&h=600&fit=crop" alt="Urban Dreams" class="book-cover">
-                    <div class="book-info">
-                        <span class="book-category">Contemporary Fiction</span>
-                        <h3 class="book-title">Urban Dreams</h3>
-                        <p class="book-author">by Karan Johar</p>
-                        <p class="book-description">A compelling narrative about ambition, love, and identity in modern metropolitan India, capturing the pulse of urban life.</p>
-                        <div class="book-price">₹450</div>
-                        <button class="book-btn" onclick="openOrderModal('Urban Dreams', 'Karan Johar', 450)">Book Now on WhatsApp</button>
-                    </div>
-                </div>
-
-                <!-- Book 9 -->
-                <div class="book-card">
-                    <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=400&h=600&fit=crop" alt="Environmental Economics" class="book-cover">
-                    <div class="book-info">
-                        <span class="book-category">Economics</span>
-                        <h3 class="book-title">Environmental Economics</h3>
-                        <p class="book-author">by Dr. Sunita Narain</p>
-                        <p class="book-description">Critical analysis of sustainability, climate policy, and economic development with focus on India's environmental challenges.</p>
-                        <div class="book-price">₹725</div>
-                        <button class="book-btn" onclick="openOrderModal('Environmental Economics', 'Dr. Sunita Narain', 725)">Book Now on WhatsApp</button>
-                    </div>
-                </div>
-
-                <!-- Book 10 -->
-                <div class="book-card">
-                    <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=400&h=600&fit=crop" alt="Journey Within" class="book-cover">
-                    <div class="book-info">
-                        <span class="book-category">Philosophy</span>
-                        <h3 class="book-title">Journey Within</h3>
-                        <p class="book-author">by Acharya Prashant</p>
-                        <p class="book-description">Profound exploration of consciousness, spirituality, and the quest for meaning in contemporary times through Vedantic wisdom.</p>
-                        <div class="book-price">₹399</div>
-                        <button class="book-btn" onclick="openOrderModal('Journey Within', 'Acharya Prashant', 399)">Book Now on WhatsApp</button>
+                        <span class="book-category">Romance</span>
+                        <h3 class="book-title">Erlin</h3>
+                        <p class="book-author">by Arjun PS</p>
+                        <p class="book-description">Erlin - Malayalam novel written by Arjun PS. A captivating romantic journey that will touch your heart.</p>
+                        <div class="book-price">₹108</div>
+                        <button class="book-btn" onclick="openOrderModal('Erlin', 'Arjun PS', 108)">Book Now on WhatsApp</button>
                     </div>
                 </div>
             </div>
@@ -1075,69 +1740,145 @@
 
     <!-- Order Modal -->
     <div class="modal" id="orderModal">
-        <div class="modal-content">
+        <div class="modal-content" id="modalContent">
+            <div class="modal-drag-handle" id="dragHandle">
+                <div class="modal-indicator"></div>
+            </div>
+            
             <button class="modal-close" onclick="closeOrderModal()">&times;</button>
-            <h2 class="modal-title">Complete Your Order</h2>
+            
+            <div class="modal-header">
+                <h2 class="modal-title">Complete Your Order</h2>
+                <p class="modal-subtitle">Fill in your details to order via WhatsApp</p>
+            </div>
+
             <form id="orderForm" onsubmit="submitOrder(event)">
-                <div class="form-group">
-                    <label>Selected Book *</label>
-                    <input type="text" id="bookName" readonly required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Full Name *</label>
-                    <input type="text" id="customerName" placeholder="Enter your full name" required>
-                </div>
-
-                <div class="form-row">
+                <div class="form-section">
                     <div class="form-group">
-                        <label>Phone Number *</label>
-                        <input type="tel" id="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email *</label>
-                        <input type="email" id="email" placeholder="your@email.com" required>
+                        <label>Selected Book</label>
+                        <input type="text" id="bookName" readonly required>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Full Address *</label>
-                    <input type="text" id="address" placeholder="House/Flat No., Street, Locality" required>
-                </div>
+                <div class="form-section">
+                    <div class="form-section-title">Personal Information</div>
+                    
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="customerName" placeholder="John Doe" required>
+                    </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>City *</label>
-                        <input type="text" id="city" placeholder="Your city" required>
-                    </div>
-                    <div class="form-group">
-                        <label>State *</label>
-                        <input type="text" id="state" placeholder="Your state" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Pincode *</label>
-                        <input type="text" id="pincode" placeholder="6-digit pincode" pattern="[0-9]{6}" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Quantity *</label>
-                        <input type="number" id="quantity" value="1" min="1" max="50" required>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="tel" id="phone" placeholder="9876543210" pattern="[0-9]{10}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="email" placeholder="email@example.com" required>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Total Price</label>
-                    <input type="text" id="totalPrice" readonly style="font-weight: 700; color: #27ae60; font-size: 1.2rem;">
+                <div class="form-section">
+                    <div class="form-section-title">Delivery Address</div>
+                    
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" id="address" placeholder="House No., Street, Locality" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" id="city" placeholder="City name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" id="state" placeholder="State name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Pincode</label>
+                            <input type="text" id="pincode" placeholder="670001" pattern="[0-9]{6}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" id="quantity" value="1" min="1" max="50" required>
+                        </div>
+                    </div>
                 </div>
 
-                <button type="submit" class="submit-btn">Order via WhatsApp</button>
+                <div class="price-display">
+                    <div class="price-label">Total Amount</div>
+                    <div class="price-amount" id="totalPrice">₹0</div>
+                </div>
+
+                <button type="submit" class="submit-btn">📱 Order via WhatsApp</button>
             </form>
         </div>
     </div>
 
     <script>
+        // Hero Banner Auto-Scrolling with Navigation Dots
+        (function() {
+            const slides = document.querySelectorAll('.hero-banner-slide');
+            const dots = document.querySelectorAll('.banner-dot');
+            
+            if (slides.length > 0) {
+                let currentSlide = 0;
+                let autoScrollInterval;
+                
+                function goToSlide(index) {
+                    // Remove active class from current slide and dot
+                    slides[currentSlide].classList.remove('active');
+                    dots[currentSlide].classList.remove('active');
+                    
+                    // Set new current slide
+                    currentSlide = index;
+                    
+                    // Add active class to new slide and dot
+                    slides[currentSlide].classList.add('active');
+                    dots[currentSlide].classList.add('active');
+                }
+                
+                function nextSlide() {
+                    const nextIndex = (currentSlide + 1) % slides.length;
+                    goToSlide(nextIndex);
+                }
+                
+                // Auto-scroll every 4 seconds
+                function startAutoScroll() {
+                    autoScrollInterval = setInterval(nextSlide, 4000);
+                }
+                
+                function stopAutoScroll() {
+                    clearInterval(autoScrollInterval);
+                }
+                
+                // Add click event to dots
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        stopAutoScroll();
+                        goToSlide(index);
+                        startAutoScroll(); // Restart auto-scroll after manual selection
+                    });
+                });
+                
+                // Start auto-scrolling
+                startAutoScroll();
+                
+                // Pause on hover
+                const bannerContainer = document.querySelector('.hero-banner-container');
+                if (bannerContainer) {
+                    bannerContainer.addEventListener('mouseenter', stopAutoScroll);
+                    bannerContainer.addEventListener('mouseleave', startAutoScroll);
+                }
+            }
+        })();
+
         // Global variables to store book details
         let currentBook = {
             name: '',
@@ -1150,27 +1891,116 @@
             currentBook = { name: bookName, author: author, price: price };
             
             document.getElementById('bookName').value = bookName;
-            document.getElementById('totalPrice').value = '₹' + price;
+            document.getElementById('totalPrice').textContent = '₹' + price;
+            document.getElementById('quantity').value = 1;
             document.getElementById('orderModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            document.body.classList.add('modal-open');
         }
 
         // Close order modal
         function closeOrderModal() {
-            document.getElementById('orderModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-            document.getElementById('orderForm').reset();
+            const modal = document.getElementById('orderModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modalContent.classList.add('closing');
+            
+            setTimeout(() => {
+                modal.classList.remove('active');
+                modalContent.classList.remove('closing');
+                modalContent.style.transform = '';
+                modal.style.background = '';
+                document.body.classList.remove('modal-open');
+                document.getElementById('orderForm').reset();
+                document.getElementById('totalPrice').textContent = '₹0';
+            }, 300);
         }
 
-        // Update total price when quantity changes
+        // Drag to close functionality and initialization
+        let startY = 0;
+        let currentY = 0;
+        let isDragging = false;
+        const dragThreshold = 100; // pixels to drag down to close
+
         document.addEventListener('DOMContentLoaded', function() {
+            const modalContent = document.getElementById('modalContent');
+            const dragHandle = document.getElementById('dragHandle');
+            const modal = document.getElementById('orderModal');
             const quantityInput = document.getElementById('quantity');
+
+            // Update total price when quantity changes
             if (quantityInput) {
                 quantityInput.addEventListener('input', function() {
                     const quantity = parseInt(this.value) || 1;
                     const total = currentBook.price * quantity;
-                    document.getElementById('totalPrice').value = '₹' + total;
+                    document.getElementById('totalPrice').textContent = '₹' + total;
                 });
+            }
+
+            // Close modal when clicking backdrop
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeOrderModal();
+                    }
+                });
+            }
+
+            // Touch events for drag
+            if (dragHandle && modalContent) {
+                dragHandle.addEventListener('touchstart', handleDragStart, { passive: true });
+                dragHandle.addEventListener('touchmove', handleDragMove, { passive: false });
+                dragHandle.addEventListener('touchend', handleDragEnd, { passive: true });
+
+                // Mouse events for drag (desktop testing)
+                dragHandle.addEventListener('mousedown', handleDragStart);
+                document.addEventListener('mousemove', handleDragMove);
+                document.addEventListener('mouseup', handleDragEnd);
+            }
+
+            function handleDragStart(e) {
+                if (!modal.classList.contains('active')) return;
+                
+                isDragging = true;
+                startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+                modalContent.classList.add('dragging');
+            }
+
+            function handleDragMove(e) {
+                if (!isDragging) return;
+
+                currentY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+                const deltaY = currentY - startY;
+
+                // Only allow dragging down
+                if (deltaY > 0) {
+                    e.preventDefault();
+                    modalContent.style.transform = `translateY(${deltaY}px)`;
+                    
+                    // Fade backdrop based on drag distance
+                    const opacity = Math.max(0.3, 1 - (deltaY / 300));
+                    modal.style.background = `rgba(0, 0, 0, ${opacity * 0.6})`;
+                }
+            }
+
+            function handleDragEnd(e) {
+                if (!isDragging) return;
+
+                isDragging = false;
+                const deltaY = currentY - startY;
+
+                modalContent.classList.remove('dragging');
+
+                // Close if dragged down enough
+                if (deltaY > dragThreshold) {
+                    closeOrderModal();
+                } else {
+                    // Reset position
+                    modalContent.style.transform = '';
+                    modal.style.background = '';
+                }
+
+                startY = 0;
+                currentY = 0;
             }
         });
 
@@ -1215,7 +2045,7 @@ I would like to place this order. Please confirm availability and delivery timel
             // Encode message for URL
             const encodedMessage = encodeURIComponent(message);
             
-            // WhatsApp business number (replace with actual number)
+            // WhatsApp business number
             const whatsappNumber = '919497331817';
             
             // Create WhatsApp URL
@@ -1230,13 +2060,6 @@ I would like to place this order. Please confirm availability and delivery timel
                 alert('Redirecting to WhatsApp... Please complete your order there!');
             }, 500);
         }
-
-        // Close modal when clicking outside
-        document.getElementById('orderModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeOrderModal();
-            }
-        });
 
         // Smooth scroll for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
