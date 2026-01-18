@@ -585,6 +585,13 @@
             margin-bottom: 1rem;
         }
 
+        .book-pages {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
         .book-btn {
             width: 100%;
             background: var(--gradient-primary);
@@ -1691,7 +1698,7 @@
         <div class="hero-banner-container">
             <div class="hero-banner-slider" id="heroBannerSlider">
                 <img src="banner1.jpeg" alt="Everline Publications Banner 1" class="hero-banner-slide active">
-                <img src="banner2.jpeg" alt="Everline Publications Banner 2" class="hero-banner-slide">
+                <!-- <img src="banner2.jpeg" alt="Everline Publications Banner 2" class="hero-banner-slide"> -->
             </div>
             <div class="banner-dots" id="bannerDots">
                 <span class="banner-dot active" data-slide="0"></span>
@@ -1705,26 +1712,26 @@
     <section class="about" id="about">
         <div class="container">
             <h2 class="section-title">About Everline Publications</h2>
-            <p class="section-subtitle">Building bridges between authors and readers since 2008</p>
+            <p class="section-subtitle">Building bridges between authors and readers since 2008 • Starting 2025 November • Total Published: 12 Books</p>
             <div class="about-content">
                 <p>Everline Publications stands as a beacon of quality in India's publishing landscape. For over 15 years, we have been committed to bringing exceptional literary works to readers across the nation. Our mission is to discover, nurture, and publish voices that inspire, educate, and transform.</p>
                 <p>We believe in the power of the written word to shape minds and societies. From fiction to non-fiction, academic texts to contemporary literature, our catalog represents the finest in Indian and international publishing.</p>
                 <div class="stats">
                     <div class="stat-item">
-                        <span class="stat-number">500+</span>
+                        <span class="stat-number">12</span>
                         <span class="stat-label">Books Published</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">200+</span>
-                        <span class="stat-label">Renowned Authors</span>
+                        <span class="stat-number">₹50</span>
+                        <span class="stat-label">Delivery Charges</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">15</span>
-                        <span class="stat-label">Years of Excellence</span>
+                        <span class="stat-number">Nov 2025</span>
+                        <span class="stat-label">Started Publishing</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">50,000+</span>
-                        <span class="stat-label">Happy Readers</span>
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Quality Assured</span>
                     </div>
                 </div>
             </div>
@@ -1745,8 +1752,9 @@
                         <h3 class="book-title">Pranaya Poompodi</h3>
                         <p class="book-author">by Sanjo Simon</p>
                         <p class="book-description">Pranaya Poompodi Malayalam novel written by Sanjo Simon. A beautiful romance story that captures the essence of love and relationships.</p>
-                        <div class="book-price">₹63</div>
-                        <button class="book-btn" onclick="openOrderModal('Pranaya Poompodi', 'Sanjo Simon', 63)">Book Now on WhatsApp</button>
+                        <p class="book-pages"><small>Pages: 63</small></p>
+                        <div class="book-price">₹120</div>
+                        <button class="book-btn" onclick="openOrderModal('Pranaya Poompodi', 'Sanjo Simon', 120, 63)">Book Now on WhatsApp</button>
                     </div>
                 </div>
 
@@ -1758,8 +1766,9 @@
                         <h3 class="book-title">Amaluvum Mathavanum</h3>
                         <p class="book-author">by Sarath Manikandan</p>
                         <p class="book-description">Amaluvum Mathavanum Malayalam novel written by Sarath Manikandan. A touching romantic tale that explores deep emotions.</p>
-                        <div class="book-price">₹52</div>
-                        <button class="book-btn" onclick="openOrderModal('Amaluvum Mathavanum', 'Sarath Manikandan', 52)">Book Now on WhatsApp</button>
+                        <p class="book-pages"><small>Pages: 52</small></p>
+                        <div class="book-price">₹120</div>
+                        <button class="book-btn" onclick="openOrderModal('Amaluvum Mathavanum', 'Sarath Manikandan', 120, 52)">Book Now on WhatsApp</button>
                     </div>
                 </div>
 
@@ -1771,8 +1780,9 @@
                         <h3 class="book-title">Silence</h3>
                         <p class="book-author">by Deepa Valsalam</p>
                         <p class="book-description">Silence - Malayalam stories written by Deepa Valsalam. A collection of romantic stories that speak volumes through silence.</p>
-                        <div class="book-price">₹66</div>
-                        <button class="book-btn" onclick="openOrderModal('Silence', 'Deepa Valsalam', 66)">Book Now on WhatsApp</button>
+                        <p class="book-pages"><small>Pages: 66</small></p>
+                        <div class="book-price">₹130</div>
+                        <button class="book-btn" onclick="openOrderModal('Silence', 'Deepa Valsalam', 130, 66)">Book Now on WhatsApp</button>
                     </div>
                 </div>
 
@@ -1784,8 +1794,37 @@
                         <h3 class="book-title">Erlin</h3>
                         <p class="book-author">by Arjun PS</p>
                         <p class="book-description">Erlin - Malayalam novel written by Arjun PS. A captivating romantic journey that will touch your heart.</p>
-                        <div class="book-price">₹108</div>
-                        <button class="book-btn" onclick="openOrderModal('Erlin', 'Arjun PS', 108)">Book Now on WhatsApp</button>
+                        <p class="book-pages"><small>Pages: 108</small></p>
+                        <div class="book-price">₹200</div>
+                        <button class="book-btn" onclick="openOrderModal('Erlin', 'Arjun PS', 200, 108)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Book 5 -->
+                <div class="book-card">
+                    <img src="EE THIRAVUM KADANN.jpeg" alt="Ee Thiravum Kadann" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Poetry</span>
+                        <h3 class="book-title">Ee Thiravum Kadann</h3>
+                        <p class="book-author">by Irene Rachel Mathew</p>
+                        <p class="book-description">Ee Thiravum Kadann - Malayalam Kavitha written by Irene Rachel Mathew. A beautiful collection of poetry that touches the soul.</p>
+                        <p class="book-pages"><small>Pages: 70</small></p>
+                        <div class="book-price">₹130</div>
+                        <button class="book-btn" onclick="openOrderModal('Ee Thiravum Kadann', 'Irene Rachel Mathew', 130, 70)">Book Now on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Book 6 -->
+                <div class="book-card">
+                    <img src="love in full bloom.jpeg" alt="Love in Full Bloom" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">Romance</span>
+                        <h3 class="book-title">Love in Full Bloom</h3>
+                        <p class="book-author">by Gokul Jayaraj</p>
+                        <p class="book-description">Love in Full Bloom - English Novella written by Gokul Jayaraj. A romantic journey exploring the beauty of love in its fullest expression.</p>
+                        <p class="book-pages"><small>Pages: 169</small></p>
+                        <div class="book-price">₹300</div>
+                        <button class="book-btn" onclick="openOrderModal('Love in Full Bloom', 'Gokul Jayaraj', 300, 169)">Book Now on WhatsApp</button>
                     </div>
                 </div>
             </div>
@@ -1965,9 +2004,24 @@
                     </div>
                 </div>
 
-                <div class="price-display">
-                    <div class="price-label">Total Amount</div>
-                    <div class="price-amount" id="totalPrice">₹0</div>
+                <div class="form-section">
+                    <div class="form-section-title">Price Breakdown</div>
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 12px; margin-bottom: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-gray);">Book Price:</span>
+                            <span style="font-weight: 600; color: var(--text-dark);" id="bookPrice">₹0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-gray);">Delivery Charges:</span>
+                            <span style="font-weight: 600; color: var(--text-dark);">₹50</span>
+                        </div>
+                        <div style="border-top: 2px solid var(--border-light); margin: 0.75rem 0; padding-top: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="font-weight: 700; color: var(--text-dark); font-size: 1.1rem;">Total Amount:</span>
+                                <span style="font-weight: 800; font-size: 1.5rem; background: var(--gradient-secondary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" id="totalPrice">₹50</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" class="submit-btn">📱 Order via WhatsApp</button>
@@ -2034,18 +2088,23 @@
         })();
 
         // Global variables to store book details
+        const DELIVERY_CHARGE = 50;
         let currentBook = {
             name: '',
             author: '',
-            price: 0
+            price: 0,
+            pages: 0
         };
 
         // Open order modal
-        function openOrderModal(bookName, author, price) {
-            currentBook = { name: bookName, author: author, price: price };
+        function openOrderModal(bookName, author, price, pages) {
+            currentBook = { name: bookName, author: author, price: price, pages: pages };
             
             document.getElementById('bookName').value = bookName;
-            document.getElementById('totalPrice').textContent = '₹' + price;
+            const subtotal = price * 1;
+            const total = subtotal + DELIVERY_CHARGE;
+            document.getElementById('bookPrice').textContent = '₹' + subtotal;
+            document.getElementById('totalPrice').textContent = '₹' + total;
             document.getElementById('quantity').value = 1;
             document.getElementById('orderModal').classList.add('active');
             document.body.classList.add('modal-open');
@@ -2085,7 +2144,9 @@
             if (quantityInput) {
                 quantityInput.addEventListener('input', function() {
                     const quantity = parseInt(this.value) || 1;
-                    const total = currentBook.price * quantity;
+                    const subtotal = currentBook.price * quantity;
+                    const total = subtotal + DELIVERY_CHARGE;
+                    document.getElementById('bookPrice').textContent = '₹' + subtotal;
                     document.getElementById('totalPrice').textContent = '₹' + total;
                 });
             }
@@ -2170,8 +2231,9 @@
             const city = document.getElementById('city').value;
             const state = document.getElementById('state').value;
             const pincode = document.getElementById('pincode').value;
-            const quantity = document.getElementById('quantity').value;
-            const totalPrice = currentBook.price * parseInt(quantity);
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const subtotal = currentBook.price * quantity;
+            const totalAmount = subtotal + DELIVERY_CHARGE;
 
             // Create WhatsApp message
             const message = `
@@ -2180,9 +2242,14 @@
 📚 *Book Details:*
 Book Name: ${currentBook.name}
 Author: ${currentBook.author}
+Pages: ${currentBook.pages}
 Quantity: ${quantity}
+
+💰 *Price Breakdown:*
 Price per book: ₹${currentBook.price}
-*Total Amount: ₹${totalPrice}*
+Subtotal: ₹${subtotal}
+Delivery Charges: ₹${DELIVERY_CHARGE}
+*Total Amount: ₹${totalAmount}*
 
 👤 *Customer Details:*
 Name: ${customerName}
