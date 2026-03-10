@@ -568,14 +568,6 @@
             flex: 1 1 280px;
             max-width: 320px;
         }
-        @supports (display: grid) {
-            .books-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                justify-content: unset;
-            }
-            .books-grid .book-card { max-width: none; }
-        }
 
         .book-card {
             background: var(--bg-white);
@@ -597,6 +589,7 @@
             width: 100%;
             height: 380px;
             object-fit: cover;
+            display: block;
             background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
         }
 
@@ -645,12 +638,17 @@
         .book-price {
             font-size: 2rem;
             font-weight: 800;
-            color: var(--accent-orange); /* fallback when gradient text not supported */
-            background: var(--gradient-accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--accent-orange);
             margin-bottom: 1rem;
+        }
+        @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+            .book-price {
+                background: var(--gradient-accent);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                -webkit-text-fill-color: transparent;
+            }
         }
 
         .book-pages {
@@ -671,6 +669,9 @@
             font-weight: 600;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 1rem;
+            text-decoration: none;
+            display: block;
+            text-align: center;
         }
 
         .book-btn:hover {
@@ -2198,7 +2199,7 @@
             <div class="books-grid">
                 <!-- Irul Vazhikal -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="irul_vazhikal.jpeg" alt="Buy Irul Vazhikal Malayalam book online - ₹250 | Everline Publications" class="book-cover" width="280" height="380" loading="eager" itemprop="image">
+                    <img src="./irul_vazhikal.jpeg" alt="Buy Irul Vazhikal Malayalam book online - ₹250 | Everline Publications" class="book-cover" width="280" height="380" loading="eager" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Fiction</span>
                         <h3 class="book-title" itemprop="name">Irul Vazhikal</h3>
@@ -2206,13 +2207,13 @@
                         <p class="book-description" itemprop="description">Irul Vazhikal - a compelling read. 120 pages. Delivery ₹50 across India.</p>
                         <p class="book-pages"><small>Pages: 120</small></p>
                         <div class="book-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer"><span itemprop="price" content="250">₹250</span><meta itemprop="priceCurrency" content="INR"></div>
-                        <button class="book-btn" onclick="openOrderModal('Irul Vazhikal', 'Everline Publications', 250, 120)" aria-label="Order Irul Vazhikal via WhatsApp">Buy Now via WhatsApp</button>
+                        <a class="book-btn" href="https://wa.me/919497331817?text=Hi%20Everline%20Publications%2C%20I%20want%20to%20order%20Irul%20Vazhikal%20%28Rs250%29." aria-label="Order Irul Vazhikal via WhatsApp">Buy Now via WhatsApp</a>
                     </div>
                 </article>
 
                 <!-- General Paper -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="general_paper.jpeg" alt="Buy General Paper book online - ₹200 | Everline Publications" class="book-cover" width="280" height="380" loading="eager" itemprop="image">
+                    <img src="./general_paper.jpeg" alt="Buy General Paper book online - ₹200 | Everline Publications" class="book-cover" width="280" height="380" loading="eager" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">General</span>
                         <h3 class="book-title" itemprop="name">General Paper</h3>
@@ -2220,13 +2221,13 @@
                         <p class="book-description" itemprop="description">General Paper - 100 pages. Delivery ₹50 across India.</p>
                         <p class="book-pages"><small>Pages: 100</small></p>
                         <div class="book-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer"><span itemprop="price" content="200">₹200</span><meta itemprop="priceCurrency" content="INR"></div>
-                        <button class="book-btn" onclick="openOrderModal('General Paper', 'Everline Publications', 200, 100)" aria-label="Order General Paper via WhatsApp">Buy Now via WhatsApp</button>
+                        <a class="book-btn" href="https://wa.me/919497331817?text=Hi%20Everline%20Publications%2C%20I%20want%20to%20order%20General%20Paper%20%28Rs200%29." aria-label="Order General Paper via WhatsApp">Buy Now via WhatsApp</a>
                     </div>
                 </article>
 
                 <!-- Hrridhayathil Ninnu -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="hrrridhayathil_ninnu.jpeg" alt="Buy Hrridhayathil Ninnu Malayalam book online - ₹200 | Everline Publications" class="book-cover" width="280" height="380" loading="eager" itemprop="image">
+                    <img src="./hrrridhayathil_ninnu.jpeg" alt="Buy Hrridhayathil Ninnu Malayalam book online - ₹200 | Everline Publications" class="book-cover" width="280" height="380" loading="eager" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Fiction</span>
                         <h3 class="book-title" itemprop="name">Hrridhayathil Ninnu</h3>
@@ -2234,13 +2235,13 @@
                         <p class="book-description" itemprop="description">Hrridhayathil Ninnu - 96 pages. Delivery ₹50 across India.</p>
                         <p class="book-pages"><small>Pages: 96</small></p>
                         <div class="book-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer"><span itemprop="price" content="200">₹200</span><meta itemprop="priceCurrency" content="INR"></div>
-                        <button class="book-btn" onclick="openOrderModal('Hrridhayathil Ninnu', 'Everline Publications', 200, 96)" aria-label="Order Hrridhayathil Ninnu via WhatsApp">Buy Now via WhatsApp</button>
+                        <a class="book-btn" href="https://wa.me/919497331817?text=Hi%20Everline%20Publications%2C%20I%20want%20to%20order%20Hrridhayathil%20Ninnu%20%28Rs200%29." aria-label="Order Hrridhayathil Ninnu via WhatsApp">Buy Now via WhatsApp</a>
                     </div>
                 </article>
 
                 <!-- Book 1 -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="Pranaya%20poompodi.jpeg" alt="Buy Pranaya Poompodi Malayalam romance novel by Sanjo Simon online - ₹120 | Everline Publications" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="./Pranaya%20poompodi.jpeg" alt="Buy Pranaya Poompodi Malayalam romance novel by Sanjo Simon online - ₹120 | Everline Publications" class="book-cover" width="280" height="380" loading="eager" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Romance</span>
                         <h3 class="book-title" itemprop="name">Pranaya Poompodi</h3>
@@ -2248,13 +2249,13 @@
                         <p class="book-description" itemprop="description">Buy Pranaya Poompodi - a beautiful Malayalam romance novel by Sanjo Simon. This 63-page love story captures the essence of relationships and emotions in Malayalam literature.</p>
                         <p class="book-pages"><small>Pages: 63</small></p>
                         <div class="book-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer"><span itemprop="price" content="120">₹120</span><meta itemprop="priceCurrency" content="INR"></div>
-                        <button class="book-btn" onclick="openOrderModal('Pranaya Poompodi', 'Sanjo Simon', 120, 63)" aria-label="Order Pranaya Poompodi Malayalam novel via WhatsApp">Buy Now via WhatsApp</button>
+                        <a class="book-btn" href="https://wa.me/919497331817?text=Hi%20Everline%20Publications%2C%20I%20want%20to%20order%20Pranaya%20Poompodi%20by%20Sanjo%20Simon%20%28Rs120%29." aria-label="Order Pranaya Poompodi Malayalam novel via WhatsApp">Buy Now via WhatsApp</a>
                     </div>
                 </article>
 
                 <!-- Book 2 -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="Amaluvum%20mathavanum.jpeg" alt="Buy Amaluvum Mathavanum Malayalam novel by Sarath Manikandan - ₹120 | Kerala Publishers" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="./Amaluvum%20mathavanum.jpeg" alt="Buy Amaluvum Mathavanum Malayalam novel by Sarath Manikandan - ₹120 | Kerala Publishers" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Romance</span>
                         <h3 class="book-title" itemprop="name">Amaluvum Mathavanum</h3>
@@ -2262,13 +2263,13 @@
                         <p class="book-description" itemprop="description">Amaluvum Mathavanum - touching Malayalam romantic novel by Sarath Manikandan. A 52-page emotional tale exploring deep feelings and relationships in Malayalam.</p>
                         <p class="book-pages"><small>Pages: 52</small></p>
                         <div class="book-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer"><span itemprop="price" content="120">₹120</span><meta itemprop="priceCurrency" content="INR"></div>
-                        <button class="book-btn" onclick="openOrderModal('Amaluvum Mathavanum', 'Sarath Manikandan', 120, 52)" aria-label="Order Amaluvum Mathavanum via WhatsApp">Buy Now via WhatsApp</button>
+                        <a class="book-btn" href="https://wa.me/919497331817?text=Hi%20Everline%20Publications%2C%20I%20want%20to%20order%20Amaluvum%20Mathavanum%20by%20Sarath%20Manikandan%20%28Rs120%29." aria-label="Order Amaluvum Mathavanum via WhatsApp">Buy Now via WhatsApp</a>
                     </div>
                 </article>
 
                 <!-- Book 3 -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="Silence%20.jpeg" alt="Buy Silence Malayalam stories collection by Deepa Valsalam - ₹130 | Malayalam books online" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="./Silence%20.jpeg" alt="Buy Silence Malayalam stories collection by Deepa Valsalam - ₹130 | Malayalam books online" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Romance</span>
                         <h3 class="book-title" itemprop="name">Silence</h3>
@@ -2276,13 +2277,13 @@
                         <p class="book-description" itemprop="description">Silence - collection of Malayalam romantic stories by Deepa Valsalam. These 66 pages of captivating stories speak volumes through silence and emotions.</p>
                         <p class="book-pages"><small>Pages: 66</small></p>
                         <div class="book-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer"><span itemprop="price" content="130">₹130</span><meta itemprop="priceCurrency" content="INR"></div>
-                        <button class="book-btn" onclick="openOrderModal('Silence', 'Deepa Valsalam', 130, 66)" aria-label="Order Silence Malayalam stories via WhatsApp">Buy Now via WhatsApp</button>
+                        <a class="book-btn" href="https://wa.me/919497331817?text=Hi%20Everline%20Publications%2C%20I%20want%20to%20order%20Silence%20by%20Deepa%20Valsalam%20%28Rs130%29." aria-label="Order Silence Malayalam stories via WhatsApp">Buy Now via WhatsApp</a>
                     </div>
                 </article>
 
                 <!-- Book 4 -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="Erlin.jpeg" alt="Buy Erlin Malayalam novel by Arjun PS online - ₹200 | Best Malayalam romance books" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="./Erlin.jpeg" alt="Buy Erlin Malayalam novel by Arjun PS online - ₹200 | Best Malayalam romance books" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Romance</span>
                         <h3 class="book-title" itemprop="name">Erlin</h3>
@@ -2290,13 +2291,13 @@
                         <p class="book-description" itemprop="description">Erlin - captivating Malayalam romantic novel by Arjun PS. This 108-page journey will touch your heart with its beautiful portrayal of love and emotions.</p>
                         <p class="book-pages"><small>Pages: 108</small></p>
                         <div class="book-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer"><span itemprop="price" content="200">₹200</span><meta itemprop="priceCurrency" content="INR"></div>
-                        <button class="book-btn" onclick="openOrderModal('Erlin', 'Arjun PS', 200, 108)" aria-label="Order Erlin Malayalam novel via WhatsApp">Buy Now via WhatsApp</button>
+                        <a class="book-btn" href="https://wa.me/919497331817?text=Hi%20Everline%20Publications%2C%20I%20want%20to%20order%20Erlin%20by%20Arjun%20PS%20%28Rs200%29." aria-label="Order Erlin Malayalam novel via WhatsApp">Buy Now via WhatsApp</a>
                     </div>
                 </article>
 
                 <!-- Book 5 -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="EE THIRAVUM KADANN.jpeg" alt="Buy Ee Thiravum Kadann Malayalam poetry kavitha by Irene Rachel Mathew - ₹130" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="./EE%20THIRAVUM%20KADANN.jpeg" alt="Buy Ee Thiravum Kadann Malayalam poetry kavitha by Irene Rachel Mathew - ₹130" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Poetry</span>
                         <h3 class="book-title" itemprop="name">Ee Thiravum Kadann</h3>
@@ -2304,13 +2305,13 @@
                         <p class="book-description" itemprop="description">Ee Thiravum Kadann - beautiful Malayalam Kavitha (poetry) collection by Irene Rachel Mathew. 70 pages of soul-touching poems in Malayalam language.</p>
                         <p class="book-pages"><small>Pages: 70</small></p>
                         <div class="book-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer"><span itemprop="price" content="130">₹130</span><meta itemprop="priceCurrency" content="INR"></div>
-                        <button class="book-btn" onclick="openOrderModal('Ee Thiravum Kadann', 'Irene Rachel Mathew', 130, 70)" aria-label="Order Ee Thiravum Kadann Malayalam poetry via WhatsApp">Buy Now via WhatsApp</button>
+                        <a class="book-btn" href="https://wa.me/919497331817?text=Hi%20Everline%20Publications%2C%20I%20want%20to%20order%20Ee%20Thiravum%20Kadann%20by%20Irene%20Rachel%20Mathew%20%28Rs130%29." aria-label="Order Ee Thiravum Kadann Malayalam poetry via WhatsApp">Buy Now via WhatsApp</a>
                     </div>
                 </article>
 
                 <!-- Book 6 -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="love%20in%20full%20bloom.jpeg" alt="Buy Love in Full Bloom English novella by Gokul Jayaraj - ₹300 | Indian authors" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="./love%20in%20full%20bloom.jpeg" alt="Buy Love in Full Bloom English novella by Gokul Jayaraj - ₹300 | Indian authors" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Romance</span>
                         <h3 class="book-title" itemprop="name">Love in Full Bloom</h3>
@@ -2318,7 +2319,7 @@
                         <p class="book-description" itemprop="description">Love in Full Bloom - captivating English romantic novella by Gokul Jayaraj. This 169-page journey explores the fullest expression of love and relationships.</p>
                         <p class="book-pages"><small>Pages: 169</small></p>
                         <div class="book-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer"><span itemprop="price" content="300">₹300</span><meta itemprop="priceCurrency" content="INR"></div>
-                        <button class="book-btn" onclick="openOrderModal('Love in Full Bloom', 'Gokul Jayaraj', 300, 169)" aria-label="Order Love in Full Bloom English novella via WhatsApp">Buy Now via WhatsApp</button>
+                        <a class="book-btn" href="https://wa.me/919497331817?text=Hi%20Everline%20Publications%2C%20I%20want%20to%20order%20Love%20in%20Full%20Bloom%20by%20Gokul%20Jayaraj%20%28Rs300%29." aria-label="Order Love in Full Bloom English novella via WhatsApp">Buy Now via WhatsApp</a>
                     </div>
                 </article>
             </div>
