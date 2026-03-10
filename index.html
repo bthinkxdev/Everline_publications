@@ -558,10 +558,23 @@
         }
 
         .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 2rem;
             margin-top: 3rem;
+            justify-content: center;
+        }
+        .books-grid .book-card {
+            flex: 1 1 280px;
+            max-width: 320px;
+        }
+        @supports (display: grid) {
+            .books-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                justify-content: unset;
+            }
+            .books-grid .book-card { max-width: none; }
         }
 
         .book-card {
@@ -632,6 +645,7 @@
         .book-price {
             font-size: 2rem;
             font-weight: 800;
+            color: var(--accent-orange); /* fallback when gradient text not supported */
             background: var(--gradient-accent);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -1405,6 +1419,10 @@
             .books-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+            }
+            .books-grid .book-card {
+                flex: 1 1 100%;
+                max-width: 100%;
             }
 
             .book-cover {
@@ -2180,7 +2198,7 @@
             <div class="books-grid">
                 <!-- Irul Vazhikal -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="irul_vazhikal.jpeg" alt="Buy Irul Vazhikal Malayalam book online - ₹250 | Everline Publications" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="irul_vazhikal.jpeg" alt="Buy Irul Vazhikal Malayalam book online - ₹250 | Everline Publications" class="book-cover" width="280" height="380" loading="eager" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Fiction</span>
                         <h3 class="book-title" itemprop="name">Irul Vazhikal</h3>
@@ -2194,7 +2212,7 @@
 
                 <!-- General Paper -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="general_paper.jpeg" alt="Buy General Paper book online - ₹200 | Everline Publications" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="general_paper.jpeg" alt="Buy General Paper book online - ₹200 | Everline Publications" class="book-cover" width="280" height="380" loading="eager" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">General</span>
                         <h3 class="book-title" itemprop="name">General Paper</h3>
@@ -2208,7 +2226,7 @@
 
                 <!-- Hrridhayathil Ninnu -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="hrrridhayathil_ninnu.jpeg" alt="Buy Hrridhayathil Ninnu Malayalam book online - ₹200 | Everline Publications" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="hrrridhayathil_ninnu.jpeg" alt="Buy Hrridhayathil Ninnu Malayalam book online - ₹200 | Everline Publications" class="book-cover" width="280" height="380" loading="eager" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Fiction</span>
                         <h3 class="book-title" itemprop="name">Hrridhayathil Ninnu</h3>
@@ -2222,7 +2240,7 @@
 
                 <!-- Book 1 -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="Pranaya poompodi.jpeg" alt="Buy Pranaya Poompodi Malayalam romance novel by Sanjo Simon online - ₹120 | Everline Publications" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="Pranaya%20poompodi.jpeg" alt="Buy Pranaya Poompodi Malayalam romance novel by Sanjo Simon online - ₹120 | Everline Publications" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Romance</span>
                         <h3 class="book-title" itemprop="name">Pranaya Poompodi</h3>
@@ -2236,7 +2254,7 @@
 
                 <!-- Book 2 -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="Amaluvum mathavanum.jpeg" alt="Buy Amaluvum Mathavanum Malayalam novel by Sarath Manikandan - ₹120 | Kerala Publishers" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="Amaluvum%20mathavanum.jpeg" alt="Buy Amaluvum Mathavanum Malayalam novel by Sarath Manikandan - ₹120 | Kerala Publishers" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Romance</span>
                         <h3 class="book-title" itemprop="name">Amaluvum Mathavanum</h3>
@@ -2250,7 +2268,7 @@
 
                 <!-- Book 3 -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="Silence .jpeg" alt="Buy Silence Malayalam stories collection by Deepa Valsalam - ₹130 | Malayalam books online" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="Silence%20.jpeg" alt="Buy Silence Malayalam stories collection by Deepa Valsalam - ₹130 | Malayalam books online" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Romance</span>
                         <h3 class="book-title" itemprop="name">Silence</h3>
@@ -2292,7 +2310,7 @@
 
                 <!-- Book 6 -->
                 <article class="book-card" itemscope itemtype="https://schema.org/Book">
-                    <img src="love in full bloom.jpeg" alt="Buy Love in Full Bloom English novella by Gokul Jayaraj - ₹300 | Indian authors" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
+                    <img src="love%20in%20full%20bloom.jpeg" alt="Buy Love in Full Bloom English novella by Gokul Jayaraj - ₹300 | Indian authors" class="book-cover" width="280" height="380" loading="lazy" itemprop="image">
                     <div class="book-info">
                         <span class="book-category">Romance</span>
                         <h3 class="book-title" itemprop="name">Love in Full Bloom</h3>
