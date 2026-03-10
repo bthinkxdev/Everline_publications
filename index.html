@@ -683,287 +683,266 @@
             transform: translateY(0);
         }
 
-        /* Modal Styles */
+        /* ── Modal ── */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 10000;
-            padding: 0;
         }
 
         .modal.active {
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.25s ease;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; }
-            to { opacity: 1; }
+            to   { opacity: 1; }
         }
 
+        body.modal-open { overflow: hidden; }
+
+        /* Sheet */
         .modal-content {
             background: var(--bg-white);
-            border-radius: 24px 24px 0 0;
-            max-width: 600px;
+            border-radius: 28px 28px 0 0;
             width: 100%;
-            padding: 1.5rem 1.5rem 2rem;
+            max-width: 560px;
+            padding: 0 1.25rem 2rem;
             position: relative;
-            max-height: 85vh;
+            max-height: 92vh;
             overflow-y: auto;
-            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
-            animation: slideUpModal 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 -4px 40px rgba(0,0,0,0.22);
+            animation: slideUp 0.38s cubic-bezier(0.32, 0.72, 0, 1);
             transition: transform 0.2s ease-out;
             touch-action: pan-y;
         }
 
-        @keyframes slideUpModal {
-            from {
-                opacity: 0;
-                transform: translateY(100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to   { transform: translateY(0);    opacity: 1; }
         }
 
-        .modal-content.dragging {
-            transition: none;
-            overflow-y: hidden;
+        .modal-content.dragging  { transition: none; overflow-y: hidden; }
+        .modal-content.closing   { animation: slideDown 0.28s cubic-bezier(0.4,0,0.6,1) forwards; }
+
+        @keyframes slideDown {
+            from { transform: translateY(0);    opacity: 1; }
+            to   { transform: translateY(100%); opacity: 0; }
         }
 
-        .modal-content.dragging .modal-indicator {
-            width: 60px;
-            background: rgba(13, 157, 170, 0.5);
-        }
-
-        .modal-content.closing {
-            animation: slideDownModal 0.3s cubic-bezier(0.4, 0, 0.6, 1) forwards;
-        }
-
-        @keyframes slideDownModal {
-            from {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateY(100%);
-            }
-        }
-
-        /* Prevent body scroll when modal is open */
-        body.modal-open {
-            overflow: hidden;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: var(--bg-light);
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-dark);
-            line-height: 1;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 11;
-        }
-
-        .modal-close:hover {
-            background: var(--gradient-secondary);
-            color: var(--bg-white);
-            transform: rotate(90deg);
-        }
-
-        .modal-close:active {
-            transform: scale(0.9);
-        }
-
-        .modal-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-top: 0.5rem;
-            position: relative;
-        }
-
+        /* Drag handle */
         .modal-drag-handle {
-            padding: 1rem 0 0.5rem;
-            margin: -1.5rem -1.5rem 0;
-            cursor: grab;
+            padding: 0.9rem 0 0.4rem;
+            margin: 0 -1.25rem;
             display: flex;
             justify-content: center;
-            align-items: center;
+            cursor: grab;
             position: sticky;
-            top: -1.5rem;
+            top: 0;
             background: var(--bg-white);
             z-index: 10;
-            border-radius: 24px 24px 0 0;
+            border-radius: 28px 28px 0 0;
         }
-
-        .modal-drag-handle:active {
-            cursor: grabbing;
-        }
+        .modal-drag-handle:active { cursor: grabbing; }
 
         .modal-indicator {
-            width: 40px;
-            height: 5px;
-            background: var(--border-light);
-            border-radius: 3px;
-            transition: all 0.2s ease;
+            width: 36px;
+            height: 4px;
+            background: #d1d5db;
+            border-radius: 2px;
+            transition: width 0.2s ease, background 0.2s ease;
+        }
+        .modal-drag-handle:hover .modal-indicator  { width: 48px; background: var(--primary-teal); }
+        .modal-drag-handle:active .modal-indicator { width: 56px; }
+
+        /* Close */
+        .modal-close {
+            position: absolute;
+            top: 0.9rem;
+            right: 1.25rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-light);
+            color: var(--text-gray);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            z-index: 11;
+        }
+        .modal-close:hover  { background: #fee2e2; color: #ef4444; transform: rotate(90deg); }
+        .modal-close:active { transform: scale(0.9); }
+
+        /* Header */
+        .modal-header {
+            text-align: center;
+            padding: 0.5rem 2.5rem 1.25rem;
         }
 
-        .modal-drag-handle:hover .modal-indicator {
-            background: rgba(13, 157, 170, 0.3);
-            width: 50px;
-        }
-
-        .modal-drag-handle:active .modal-indicator {
-            width: 60px;
+        .modal-badge {
+            display: inline-block;
+            background: var(--gradient-secondary);
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            padding: 0.3rem 0.85rem;
+            border-radius: 20px;
+            margin-bottom: 0.6rem;
         }
 
         .modal-title {
-            font-size: 1.75rem;
-            margin-bottom: 0.5rem;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 1.35rem;
             font-weight: 800;
+            color: var(--text-dark);
             line-height: 1.3;
+            margin-bottom: 0.3rem;
         }
 
         .modal-subtitle {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.6rem;
-            font-weight: 600;
-            color: var(--text-dark);
             font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 1rem 1.2rem;
-            border: 2px solid var(--border-light);
-            border-radius: 14px;
-            font-size: 1rem;
-            background: var(--bg-white);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-            color: var(--text-dark);
-            -webkit-appearance: none;
-            appearance: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-        }
-
-        .form-group input:active {
-            transform: scale(0.995);
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary-teal);
-            box-shadow: 0 0 0 4px rgba(13, 157, 170, 0.1);
-            background: var(--bg-white);
-        }
-
-        .form-group input[readonly] {
-            background: var(--bg-light);
-            color: var(--text-gray);
-            font-weight: 600;
-        }
-
-        .form-group input::placeholder {
             color: var(--text-light);
-            opacity: 0.7;
         }
 
-        .form-group input:valid {
-            border-color: rgba(39, 174, 96, 0.3);
+        /* Price Summary Card */
+        .price-summary {
+            background: linear-gradient(135deg, #f0fbfc 0%, #e6f7f8 100%);
+            border: 1.5px solid rgba(13,157,170,0.18);
+            border-radius: 18px;
+            padding: 1rem 1.25rem 0.75rem;
+            margin-bottom: 1rem;
         }
 
-        .form-group input:invalid:not(:placeholder-shown) {
-            border-color: rgba(231, 76, 60, 0.3);
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.35rem 0;
         }
 
-        /* Form animations */
-        .modal.active .form-group {
-            animation: fadeInUp 0.5s ease forwards;
-            opacity: 0;
+        .price-label-text {
+            font-size: 0.88rem;
+            color: var(--text-gray);
         }
 
-        .modal.active .form-group:nth-child(1) { animation-delay: 0.05s; }
-        .modal.active .form-group:nth-child(2) { animation-delay: 0.1s; }
-        .modal.active .form-group:nth-child(3) { animation-delay: 0.15s; }
-        .modal.active .form-group:nth-child(4) { animation-delay: 0.2s; }
-        .modal.active .form-group:nth-child(5) { animation-delay: 0.25s; }
-        .modal.active .form-group:nth-child(6) { animation-delay: 0.3s; }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .price-val {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-dark);
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        .price-total-row {
+            border-top: 1.5px solid rgba(13,157,170,0.2);
+            margin-top: 0.35rem;
+            padding-top: 0.7rem;
         }
 
+        .price-total-row .price-label-text {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .price-total-val {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-teal);
+            line-height: 1;
+        }
+
+        /* Quantity Stepper */
+        .qty-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-light);
+            border-radius: 14px;
+            padding: 0.7rem 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .qty-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .qty-stepper {
+            display: flex;
+            align-items: center;
+            background: var(--bg-white);
+            border-radius: 12px;
+            border: 1.5px solid var(--border-light);
+            overflow: hidden;
+        }
+
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            font-size: 1.35rem;
+            font-weight: 400;
+            color: var(--primary-teal);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.18s ease;
+            -webkit-tap-highlight-color: transparent;
+            line-height: 1;
+        }
+        .qty-btn:hover  { background: rgba(13,157,170,0.09); }
+        .qty-btn:active { background: rgba(13,157,170,0.2); }
+
+        .qty-input {
+            width: 46px;
+            height: 40px;
+            border: none !important;
+            border-left:  1.5px solid var(--border-light) !important;
+            border-right: 1.5px solid var(--border-light) !important;
+            border-radius: 0 !important;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            background: var(--bg-white) !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            -moz-appearance: textfield;
+        }
+        .qty-input:focus { outline: none; }
+        .qty-input::-webkit-outer-spin-button,
+        .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+        /* Form */
         .form-section {
-            margin: 1.5rem 0;
-            padding: 1.5rem 0;
+            margin: 1rem 0;
+            padding-top: 1rem;
             border-top: 1px solid var(--border-light);
         }
 
-        .form-section:first-of-type {
-            border-top: none;
-            padding-top: 0;
-        }
-
         .form-section-title {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             color: var(--text-gray);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 1rem;
+            letter-spacing: 0.6px;
+            margin-bottom: 0.85rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -972,97 +951,113 @@
         .form-section-title::before {
             content: '';
             width: 3px;
-            height: 12px;
+            height: 11px;
             background: var(--gradient-secondary);
             border-radius: 2px;
+            flex-shrink: 0;
         }
 
-        .price-display {
-            background: linear-gradient(135deg, rgba(13, 157, 170, 0.1) 0%, rgba(77, 166, 212, 0.1) 100%);
-            border: 2px solid rgba(13, 157, 170, 0.2);
-            border-radius: 16px;
-            padding: 1.5rem;
-            text-align: center;
-            margin: 1.5rem 0;
-            box-shadow: 0 4px 16px rgba(13, 157, 170, 0.1);
+        .form-group {
+            margin-bottom: 0.85rem;
         }
 
-        .price-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-gray);
+        .form-group label {
+            display: block;
+            margin-bottom: 0.45rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .price-amount {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: var(--gradient-secondary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: var(--gradient-primary);
-            color: var(--bg-white);
-            padding: 1.3rem;
-            border: none;
-            border-radius: 16px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 1.5rem;
-            box-shadow: 0 8px 24px rgba(13, 157, 170, 0.3);
-            letter-spacing: 0.3px;
+            color: var(--text-dark);
+            font-size: 0.82rem;
             text-transform: uppercase;
-            font-size: 0.95rem;
+            letter-spacing: 0.4px;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(13, 157, 170, 0.5);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        /* Required field indicator */
-        .form-group label::after {
-            content: '';
-        }
-
-        .form-group:has(input[required]) label::after,
-        .form-group:has(select[required]) label::after {
+        .form-group:has(input[required]) label::after {
             content: ' *';
             color: var(--accent-orange);
             font-weight: 700;
         }
 
-        /* Smooth scrollbar for modal */
-        .modal-content::-webkit-scrollbar {
-            width: 6px;
+        .form-group input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1.5px solid var(--border-light);
+            border-radius: 12px;
+            font-size: 0.98rem;
+            background: var(--bg-white);
+            color: var(--text-dark);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            -webkit-appearance: none;
+            appearance: none;
+            font-family: inherit;
         }
 
-        .modal-content::-webkit-scrollbar-track {
-            background: transparent;
+        .form-group input::placeholder { color: #b0b8c1; }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-teal);
+            box-shadow: 0 0 0 3px rgba(13,157,170,0.12);
         }
 
-        .modal-content::-webkit-scrollbar-thumb {
-            background: var(--gradient-secondary);
-            border-radius: 3px;
+        .form-group input:invalid:not(:placeholder-shown) {
+            border-color: rgba(239,68,68,0.4);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        /* Submit */
+        .submit-btn {
+            width: 100%;
+            background: var(--gradient-primary);
+            color: var(--bg-white);
+            padding: 1.1rem;
+            border: none;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.28s cubic-bezier(0.4,0,0.2,1);
+            margin-top: 1.25rem;
+            box-shadow: 0 6px 20px rgba(13,157,170,0.28);
+            letter-spacing: 0.4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .submit-btn:hover  { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(13,157,170,0.45); }
+        .submit-btn:active { transform: translateY(0); }
+
+        /* Scrollbar */
+        .modal-content::-webkit-scrollbar { width: 4px; }
+        .modal-content::-webkit-scrollbar-track { background: transparent; }
+        .modal-content::-webkit-scrollbar-thumb { background: rgba(13,157,170,0.3); border-radius: 2px; }
+
+        /* Desktop modal */
+        @media (min-width: 769px) {
+            .modal.active {
+                align-items: center;
+                padding: 1.5rem;
+            }
+            .modal-content {
+                border-radius: 24px;
+                max-height: 88vh;
+                padding: 0 2rem 2.5rem;
+            }
+            .modal-drag-handle { display: none; }
+            .modal-close { top: 1.25rem; right: 1.5rem; }
+        }
+
+        /* Very small screens */
+        @media (max-width: 380px) {
+            .modal-content { padding: 0 1rem 1.5rem; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            .modal-title { font-size: 1.15rem; }
+            .price-total-val { font-size: 1.35rem; }
         }
 
         /* Why Choose Section */
@@ -1292,32 +1287,6 @@
             }
         }
 
-        /* Desktop Modal Enhancement */
-        @media (min-width: 769px) {
-            .modal.active {
-                align-items: center;
-                padding: 2rem;
-            }
-
-            .modal-content {
-                border-radius: 24px;
-                max-height: 85vh;
-                padding: 2.5rem;
-            }
-
-            .modal-drag-handle {
-                display: none;
-            }
-
-            .modal-close {
-                top: 1rem;
-                right: 1rem;
-            }
-
-            .submit-btn:hover {
-                transform: translateY(-3px);
-            }
-        }
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -1438,15 +1407,6 @@
             .testimonials-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
-
-            .form-row .form-group {
-                margin-bottom: 1.25rem;
             }
 
             nav {
@@ -2476,97 +2436,89 @@
     <!-- Order Modal -->
     <div class="modal" id="orderModal">
         <div class="modal-content" id="modalContent">
+
+            <!-- Drag handle (mobile only) -->
             <div class="modal-drag-handle" id="dragHandle">
                 <div class="modal-indicator"></div>
             </div>
-            
-            <button class="modal-close" onclick="closeOrderModal()">&times;</button>
-            
+
+            <button class="modal-close" onclick="closeOrderModal()" aria-label="Close">&#10005;</button>
+
+            <!-- Book info header -->
             <div class="modal-header">
-                <h2 class="modal-title">Complete Your Order</h2>
-                <p class="modal-subtitle">Fill in your details to order via WhatsApp</p>
+                <p class="modal-badge">New Order</p>
+                <h2 class="modal-title" id="modalBookTitle">Book Name</h2>
+                <p class="modal-subtitle" id="modalBookMeta">Author &middot; Pages</p>
             </div>
 
             <form id="orderForm" onsubmit="submitOrder(event)">
-                <div class="form-section">
-                    <div class="form-group">
-                        <label>Selected Book</label>
-                        <input type="text" id="bookName" readonly required>
+
+                <!-- Price summary (shown first so user sees total immediately) -->
+                <div class="price-summary">
+                    <div class="price-row">
+                        <span class="price-label-text">Book Price</span>
+                        <span class="price-val" id="bookPrice">&#8377;0</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="price-label-text">Delivery</span>
+                        <span class="price-val">&#8377;50</span>
+                    </div>
+                    <div class="price-row price-total-row">
+                        <span class="price-label-text">Total Amount</span>
+                        <span class="price-total-val" id="totalPrice">&#8377;50</span>
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <div class="form-section-title">Personal Information</div>
-                    
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" id="customerName" placeholder="John Doe" required>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <input type="tel" id="phone" placeholder="9876543210" pattern="[0-9]{10}" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="email" placeholder="email@example.com" required>
-                        </div>
+                <!-- Quantity stepper -->
+                <div class="qty-section">
+                    <span class="qty-label">Quantity</span>
+                    <div class="qty-stepper">
+                        <button type="button" class="qty-btn" onclick="changeQty(-1)" aria-label="Decrease">&#8722;</button>
+                        <input type="number" id="quantity" class="qty-input" value="1" min="1" max="50" readonly>
+                        <button type="button" class="qty-btn" onclick="changeQty(1)" aria-label="Increase">+</button>
                     </div>
                 </div>
 
+                <!-- Your details -->
+                <div class="form-section">
+                    <div class="form-section-title">Your Details</div>
+                    <div class="form-group">
+                        <label for="customerName">Full Name</label>
+                        <input type="text" id="customerName" placeholder="Your full name" required autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required autocomplete="tel" inputmode="numeric">
+                    </div>
+                </div>
+
+                <!-- Delivery address -->
                 <div class="form-section">
                     <div class="form-section-title">Delivery Address</div>
-                    
                     <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" id="address" placeholder="House No., Street, Locality" required>
+                        <label for="address">Address</label>
+                        <input type="text" id="address" placeholder="House No., Street, Area" required autocomplete="street-address">
                     </div>
-
                     <div class="form-row">
                         <div class="form-group">
-                            <label>City</label>
-                            <input type="text" id="city" placeholder="City name" required>
+                            <label for="city">City</label>
+                            <input type="text" id="city" placeholder="City" required autocomplete="address-level2">
                         </div>
                         <div class="form-group">
-                            <label>State</label>
-                            <input type="text" id="state" placeholder="State name" required>
+                            <label for="state">State</label>
+                            <input type="text" id="state" placeholder="State" required autocomplete="address-level1">
                         </div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Pincode</label>
-                            <input type="text" id="pincode" placeholder="670001" pattern="[0-9]{6}" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Quantity</label>
-                            <input type="number" id="quantity" value="1" min="1" max="50" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="pincode">Pincode</label>
+                        <input type="text" id="pincode" placeholder="6-digit pincode" pattern="[0-9]{6}" required autocomplete="postal-code" inputmode="numeric">
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <div class="form-section-title">Price Breakdown</div>
-                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 12px; margin-bottom: 0.5rem;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span style="color: var(--text-gray);">Book Price:</span>
-                            <span style="font-weight: 600; color: var(--text-dark);" id="bookPrice">₹0</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span style="color: var(--text-gray);">Delivery Charges:</span>
-                            <span style="font-weight: 600; color: var(--text-dark);">₹50</span>
-                        </div>
-                        <div style="border-top: 2px solid var(--border-light); margin: 0.75rem 0; padding-top: 0.75rem;">
-                            <div style="display: flex; justify-content: space-between;">
-                                <span style="font-weight: 700; color: var(--text-dark); font-size: 1.1rem;">Total Amount:</span>
-                                <span style="font-weight: 800; font-size: 1.5rem; background: var(--gradient-secondary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" id="totalPrice">₹50</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <button type="submit" class="submit-btn">
+                    <span>&#128241;</span> Order via WhatsApp
+                </button>
 
-                <button type="submit" class="submit-btn">📱 Order via WhatsApp</button>
             </form>
         </div>
     </div>
@@ -2641,15 +2593,24 @@
         // Open order modal
         function openOrderModal(bookName, author, price, pages) {
             currentBook = { name: bookName, author: author, price: price, pages: pages };
-            
-            document.getElementById('bookName').value = bookName;
-            const subtotal = price * 1;
-            const total = subtotal + DELIVERY_CHARGE;
-            document.getElementById('bookPrice').textContent = '₹' + subtotal;
-            document.getElementById('totalPrice').textContent = '₹' + total;
+
+            document.getElementById('modalBookTitle').textContent = bookName;
+            document.getElementById('modalBookMeta').textContent = 'by ' + author + ' \u00B7 ' + pages + ' pages';
             document.getElementById('quantity').value = 1;
+            document.getElementById('bookPrice').textContent = '\u20B9' + price;
+            document.getElementById('totalPrice').textContent = '\u20B9' + (price + DELIVERY_CHARGE);
             document.getElementById('orderModal').classList.add('active');
             document.body.classList.add('modal-open');
+        }
+
+        // Quantity stepper
+        function changeQty(delta) {
+            const input = document.getElementById('quantity');
+            const qty = Math.min(50, Math.max(1, (parseInt(input.value) || 1) + delta));
+            input.value = qty;
+            const subtotal = currentBook.price * qty;
+            document.getElementById('bookPrice').textContent = '\u20B9' + subtotal;
+            document.getElementById('totalPrice').textContent = '\u20B9' + (subtotal + DELIVERY_CHARGE);
         }
 
         // Close order modal
@@ -2666,7 +2627,6 @@
                 modal.style.background = '';
                 document.body.classList.remove('modal-open');
                 document.getElementById('orderForm').reset();
-                document.getElementById('totalPrice').textContent = '₹0';
             }, 300);
         }
 
@@ -2680,18 +2640,6 @@
             const modalContent = document.getElementById('modalContent');
             const dragHandle = document.getElementById('dragHandle');
             const modal = document.getElementById('orderModal');
-            const quantityInput = document.getElementById('quantity');
-
-            // Update total price when quantity changes
-            if (quantityInput) {
-                quantityInput.addEventListener('input', function() {
-                    const quantity = parseInt(this.value) || 1;
-                    const subtotal = currentBook.price * quantity;
-                    const total = subtotal + DELIVERY_CHARGE;
-                    document.getElementById('bookPrice').textContent = '₹' + subtotal;
-                    document.getElementById('totalPrice').textContent = '₹' + total;
-                });
-            }
 
             // Close modal when clicking backdrop
             if (modal) {
@@ -2764,64 +2712,47 @@
         // Submit order and redirect to WhatsApp
         function submitOrder(event) {
             event.preventDefault();
-            
-            // Get form values
-            const customerName = document.getElementById('customerName').value;
-            const phone = document.getElementById('phone').value;
-            const email = document.getElementById('email').value;
-            const address = document.getElementById('address').value;
-            const city = document.getElementById('city').value;
-            const state = document.getElementById('state').value;
-            const pincode = document.getElementById('pincode').value;
-            const quantity = parseInt(document.getElementById('quantity').value);
-            const subtotal = currentBook.price * quantity;
-            const totalAmount = subtotal + DELIVERY_CHARGE;
 
-            // Create WhatsApp message
-            const message = `
-*New Book Order - Everline Publications*
+            const customerName = document.getElementById('customerName').value.trim();
+            const phone        = document.getElementById('phone').value.trim();
+            const address      = document.getElementById('address').value.trim();
+            const city         = document.getElementById('city').value.trim();
+            const state        = document.getElementById('state').value.trim();
+            const pincode      = document.getElementById('pincode').value.trim();
+            const quantity     = parseInt(document.getElementById('quantity').value) || 1;
+            const subtotal     = currentBook.price * quantity;
+            const totalAmount  = subtotal + DELIVERY_CHARGE;
 
-📚 *Book Details:*
-Book Name: ${currentBook.name}
-Author: ${currentBook.author}
-Pages: ${currentBook.pages}
-Quantity: ${quantity}
+            const message = [
+                '*New Book Order \u2014 Everline Publications*',
+                '',
+                '\ud83d\udcda *Book Details*',
+                'Book: ' + currentBook.name,
+                'Author: ' + currentBook.author,
+                'Pages: ' + currentBook.pages,
+                'Qty: ' + quantity,
+                '',
+                '\ud83d\udcb0 *Price Breakdown*',
+                'Price/book: \u20B9' + currentBook.price,
+                'Subtotal: \u20B9' + subtotal,
+                'Delivery: \u20B9' + DELIVERY_CHARGE,
+                '*Total: \u20B9' + totalAmount + '*',
+                '',
+                '\ud83d\udc64 *Customer*',
+                'Name: ' + customerName,
+                'Phone: ' + phone,
+                '',
+                '\ud83d\udccd *Delivery Address*',
+                address,
+                city + ', ' + state + ' \u2013 ' + pincode,
+                '',
+                'Please confirm availability and delivery timeline.'
+            ].join('\n');
 
-💰 *Price Breakdown:*
-Price per book: ₹${currentBook.price}
-Subtotal: ₹${subtotal}
-Delivery Charges: ₹${DELIVERY_CHARGE}
-*Total Amount: ₹${totalAmount}*
-
-👤 *Customer Details:*
-Name: ${customerName}
-Phone: ${phone}
-Email: ${email}
-
-📍 *Delivery Address:*
-${address}
-${city}, ${state} - ${pincode}
-
-I would like to place this order. Please confirm availability and delivery timeline.
-            `.trim();
-
-            // Encode message for URL
-            const encodedMessage = encodeURIComponent(message);
-            
-            // WhatsApp business number
-            const whatsappNumber = '919497331817';
-            
-            // Create WhatsApp URL
-            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-            
-            // Open WhatsApp
+            const whatsappURL = 'https://wa.me/919497331817?text=' + encodeURIComponent(message);
             window.open(whatsappURL, '_blank');
-            
-            // Close modal and show confirmation
-            setTimeout(() => {
-                closeOrderModal();
-                alert('Redirecting to WhatsApp... Please complete your order there!');
-            }, 500);
+
+            setTimeout(() => closeOrderModal(), 400);
         }
 
         // Smooth scroll for navigation
